@@ -13,7 +13,8 @@ public class Main {
     Spark.staticFileLocation("/public");
 
     Spark.get(
-            "/hello", (req, res) -> {
+            "/",
+            (req, res) -> {
 
               return new ModelAndView(null, "home.mustache");
             },
