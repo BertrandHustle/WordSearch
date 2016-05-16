@@ -16,7 +16,7 @@ public class Main {
 
       //capabilities
       Spark.get(
-              "/cap",
+              "/capabilities",
               (request, response) -> {
                   String json = "[\n" +
                           "    {\n" +
