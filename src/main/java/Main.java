@@ -38,6 +38,8 @@ public class Main {
                   return json;
               }
       );
+
+      /*
       Spark.get(
               "/puzzle",
               (request, response) -> {
@@ -52,6 +54,8 @@ public class Main {
                   return json;
               }
       );
+      */
+
       //this holds details about the puzzle
       Spark.post(
               "/puzzle",
