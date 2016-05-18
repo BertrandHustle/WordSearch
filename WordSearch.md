@@ -191,6 +191,70 @@ To generate a puzzle, WS will take the following into account.
 	allow for puzzles that are a single unit tall or wide, or for puzzles that are too
 	full of words. 
 		
+	5. Classes
+
+	5.1. Main: runs main method w/Spark endpoints
+	
+	5.2. Capability: describes capabilities of word generation (see section I.1. above)
+	
+		5.21. Methods
+		
+			5.211. EnscribeHorizontal(String word): enscribes word horizontally
+			
+			5.212. EnscribeVertical(String word): enscribes word vertically 
+			
+			5.213. EnscribeDiagonalUp(String word): enscribes word diagonally-upwards
+			
+			5.214. EnscribeDiagonalDown(String word): enscribes word diagonally-downwards 
+		
+		5.22. Properties
+		
+			5.221. String name: gives name of capability
+			
+			5.222. String description: describes functionality of capability
+			
+			5.223. String keyword: gives keyword of capability
+				
+	5.3. Puzzle: describes a puzzle and its properties 
+	
+		5.31. Methods
+		
+			5.311. GenerateGrid(int Width, int Height): generates grid at given width/
+			height
+			
+			5.312. GenerateWord(String word, Capability capability): 
+			checks grid for blank space, generates word letter-by-letter
+			
+				5.3121. Criss-crossing checking will occur HERE
+			
+			5.313. FillLetters(): fills remaining blank spaces in puzzle with random 
+			letters of the English Latin alphabet
+		
+		5.32. Properties
+		
+			5.321. int width: describes width of puzzle grid 
+			
+			5.322. int height: describes height of puzzle grid 
+			
+			5.323. int minWordLength: describes minimum length of word to be put in puzzle
+			
+			5.324. int maxWordLength: describes maximum length of word to be put in puzzle
+			
+			5.325. int numberOfWords: describes number of words to be put in puzzle
+			
+			5.326. ArrayList<Capability> capabilities: list of capabilities which can 
+			be used in puzzle
+
+				
+	5.4. JSONHandler: converts JSON requests into capabilties and puzzle data, and 
+	converts finished puzzles into JSON strings
+	
+		5.41. Methods
+		
+			5.411. JSONParser: converts JSON string into list of capabilities and 
+			puzzle properties
+			
+			5.412. JSONSerializer: converts a finished puzzle into JSON formatted string
 		
 		
 		
