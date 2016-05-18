@@ -55,9 +55,10 @@ public class Puzzle {
 
     }
 
-    public ArrayList<String> WordList(int numberOfWords, int minWordLength, int maxWordLength){
+    public ArrayList<String> wordList(int numberOfWords, int minWordLength, int maxWordLength){
 
         ArrayList<String> wordList = new ArrayList<>();
+
 
         return wordList;
     }
