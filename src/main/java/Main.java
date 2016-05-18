@@ -11,6 +11,23 @@ public class Main {
 
   public static void main(String[] args) {
 
+      Puzzle puzzle = new Puzzle();
+
+      String[][] grid = puzzle.GenerateGrid(5, 5);
+
+      for (int x = 0; x < 5; x++){
+
+          for (int y = 0; y < 5; y++){
+
+              System.out.print(grid[x][y] + " ");
+
+          }
+
+          System.out.print("\n");
+
+      }
+
+      /*
     port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
 
@@ -38,23 +55,6 @@ public class Main {
                   return json;
               }
       );
-
-      /*
-      Spark.get(
-              "/puzzle",
-              (request, response) -> {
-                  String json = "{\n" +
-                          "    \"width\": 20,\n" +
-                          "    \"height\": 20,\n" +
-                          "    \"words\": 10,\n" +
-                          "    \"minLength\": 4,\n" +
-                          "    \"maxLength\": 8,\n" +
-                          "    \"capabilities\": [\"horizontal\", \"vertical\", \"angle\"]\n" +
-                          "}";
-                  return json;
-              }
-      );
-      */
 
       //this holds details about the puzzle
       Spark.post(
@@ -111,6 +111,8 @@ public class Main {
                   return json;
               }
       );
+
+      */
 
 
   }
