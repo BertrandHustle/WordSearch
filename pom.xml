@@ -22,6 +22,12 @@
             <artifactId>heroku-jdbc</artifactId>
             <version>0.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

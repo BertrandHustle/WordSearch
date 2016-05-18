@@ -36,9 +36,22 @@ public class Puzzle {
 
     public void FillLetters(String[][] grid){
 
-        Random letters = new Random();
+        //String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int width = grid.length;
+        int height = grid[0].length;
+
+        Random letter = new Random();
+
+        for (int x = 0; x < width; x++){
+
+            for (int y = 0; y < height; y++){
+
+                char c = (char)(letter.nextInt(26) + 'A');
+                grid[x][y] = Character.toString(c);
+
+            }
+        }
 
     }
 
