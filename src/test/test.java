@@ -91,4 +91,10 @@ public class test {
 
     }
 
+    /**
+     * Given a word
+     * When word is passed into capability
+     * Then word is output into puzzle grid
+     */
+
 }

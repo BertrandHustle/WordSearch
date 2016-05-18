@@ -84,7 +84,7 @@ public class Puzzle {
 
             Random random = new Random();
 
-            int randomNumber = (random.nextInt(253887) + '0');
+            int randomNumber = random.nextInt(235887);
 
             //exception handling for number 0
             if (randomNumber == 0){

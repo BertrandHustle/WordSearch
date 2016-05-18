@@ -17,7 +17,7 @@ public class Main {
       Puzzle puzzle = new Puzzle();
 
       String[][] grid = puzzle.GenerateGrid(5, 5);
-      //puzzle.FillLetters(grid);
+      puzzle.FillLetters(grid);
 
       for (int x = 0; x < 5; x++){
 
