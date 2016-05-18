@@ -4,12 +4,15 @@ import spark.ModelAndView;
 
 import spark.template.mustache.MustacheTemplateEngine;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
 public class Main {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException{
 
       Puzzle puzzle = new Puzzle();
 
@@ -27,6 +30,12 @@ public class Main {
           System.out.print("\n");
 
       }
+
+      ArrayList<String> wordList = puzzle.wordList(5, 2, 10);
+
+      System.out.println(wordList.get(4));
+      System.out.println(wordList.size());
+
 
       /*
     port(Integer.valueOf(System.getenv("PORT")));

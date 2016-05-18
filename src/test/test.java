@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -44,16 +45,18 @@ public class test {
 
         //arrange
         String[][] testGrid = testPuzzle.GenerateGrid(4, 5);
+        String[][] testGrid2 = testPuzzle.GenerateGrid(4, 5);
+        String[][] testGrid3 = testPuzzle.GenerateGrid(4, 5);
 
         //act
         testPuzzle.FillLetters(testGrid);
         String test1 = testGrid[3][3];
 
         testPuzzle.FillLetters(testGrid);
-        String test2 = testGrid[3][3];
+        String test2 = testGrid2[3][3];
 
         testPuzzle.FillLetters(testGrid);
-        String test3 = testGrid[3][3];
+        String test3 = testGrid3[3][3];
 
         //assert
         assertThat(test1.equals(test2) && (test2.equals(test3)) && (test1.equals(test3)), is(false));
@@ -67,7 +70,7 @@ public class test {
      */
 
     @Test
-    public void whenGivenDictionaryThenIndex2IsRandomWord(){
+    public void whenGivenDictionaryThenIndex2IsRandomWord() throws IOException{
 
         //arrange
 
