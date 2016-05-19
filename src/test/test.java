@@ -109,7 +109,7 @@ public class test {
         boolean foundLetter = false;
 
         //act
-        String[][]testGrid = testPuzzle.inscribeWord(testWord, testCapability, grid);
+        String[][]testGrid = testPuzzle.inscribeWord(testWord, "horizontal", grid);
 
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
@@ -122,6 +122,28 @@ public class test {
 
         //assert
         assertThat(foundLetter, is(false));
+
+    }
+
+    /**
+     * Given a capability
+     * When word inscription is run
+     * Then word is inscribed in correct direction
+     */
+
+    @Test
+    public void whenGivenCapabilityThenWordDirectionIsCorrect(){
+
+        //arrange
+        String[][]grid = testPuzzle.GenerateGrid(1, 3);
+        String testWord = "HAM";
+
+        //act
+        String[][]testGrid = testPuzzle.inscribeWord(testWord, "vertical", grid);
+
+        //assert
+        assertThat((testGrid[1][1].equals("H")) && (testGrid[1][2].equals("A")) && (testGrid[1][3].equals("M")), is(true));
+
 
     }
 

@@ -26,7 +26,7 @@ public class Main {
       //System.out.println(wordList.size());
 
       for (String word : wordList) {
-          puzzle.inscribeWord(word, capability, grid);
+          puzzle.inscribeWord(word, "diagonal-down", grid);
       }
 
       //puzzle.FillLetters(grid);

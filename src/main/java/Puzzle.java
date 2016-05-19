@@ -16,7 +16,7 @@ public class Puzzle {
     int numberOfWords;
     int minWordLength;
     int maxWordLength;
-    ArrayList<Capability> capabilities;
+    ArrayList<String> capabilities;
 
     Random random = new Random();
 
@@ -39,7 +39,7 @@ public class Puzzle {
     }
 
     //this inscribes word into puzzle grid
-    public String[][] inscribeWord (String word, Capability capability, String[][] grid){
+    public String[][] inscribeWord (String word, String direction, String[][] grid) {
 
         /**
          * This is will check for boundaries in the following way:
@@ -47,59 +47,21 @@ public class Puzzle {
          * If home coordinate + length or width > length of row or column in matrix, word does not print
          */
 
-        //todo: X and Y need to be flipped
-        //these describe the dimensions of the grid
-        int xBound = grid[0].length;
-        int yBound = grid.length;
-
-        //these get random x,y coordinates in the grid, adding one to account for 0 inclusive/bound exclusive
-        int randomX = random.nextInt(xBound) + 1;
-        int randomY = random.nextInt(yBound) + 1;
+        Capability capability = new Capability();
 
 
-        //todo: catch out of bounds errors IF STATEMENT
-
-        //ghostwriter
-
-        boolean hitAWall = false;
-
-        for (int i = 0; i <= word.length(); i++) {
-
-            //try/catch block for hitting a wall
-            try {
-                //sets characters in word to spaces in grid
-                String dummy = grid[randomX-i][(randomY + i)];
-            } catch (IndexOutOfBoundsException ioe) {
-                hitAWall = true;
+        switch (direction) {
+            case "horizontal": capability.generateHorizontal(word, grid);
                 break;
-            }
-        }
-
-        if (hitAWall == false) {
-
-            for (int i = 0; i <= word.length(); i++) {
-
-                /**
-                 * for horizontal + i to randomY,
-                 * for vertical + i to randomX,
-                 * for diag-up - i to randomX, + i to randomY,
-                 * for diag-down add i to randomX, add i from randomY
-                 */
-
-                //try/catch block for hitting a wall
-                try {
-                    //sets characters in word to spaces in grid
-                    grid[(randomX)][randomY+i] = Character.toString(word.charAt(i));
-                } catch (IndexOutOfBoundsException ioe) {
-                    //todo: put reversal method here?
-                    break;
-                }
-
-            }
+            case "vertical": capability.generateVertical(word, grid);
+                break;
+            case "diagonal-up":capability.generateDiagonalUp(word, grid);
+                break;
+            case "diagonal-down": capability.generateDiagonalDown(word, grid);
+                break;
         }
 
         return grid;
-
     }
 
     //this fills empty spaces in puzzle grid w/random letters
@@ -201,11 +163,11 @@ public class Puzzle {
         this.maxWordLength = maxWordLength;
     }
 
-    public ArrayList<Capability> getCapabilities() {
+    public ArrayList<String> getCapabilities() {
         return capabilities;
     }
 
-    public void setCapabilities(ArrayList<Capability> capabilities) {
+    public void setCapabilities(ArrayList<String> capabilities) {
         this.capabilities = capabilities;
     }
 }
