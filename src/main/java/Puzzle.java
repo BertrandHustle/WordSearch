@@ -1,16 +1,15 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Describes puzzle and its attributes
  */
 public class Puzzle {
+
+    //todo: set Puzzle properties to user constraints when grid is generated
 
     int Width;
     int Height;
@@ -19,6 +18,9 @@ public class Puzzle {
     int maxWordLength;
     ArrayList<Capability> capabilities;
 
+    Random random = new Random();
+
+    //generates grid
     public String[][] GenerateGrid(int width, int height){
 
         String[][] grid = new String[width][height];
@@ -36,8 +38,8 @@ public class Puzzle {
 
     }
 
-    //this enscribes word into puzzle grid
-    public void enscribeWord (String word, Capability capability){
+    //this inscribes word into puzzle grid
+    public String[][] inscribeWord (String word, Capability capability, String[][] grid){
 
         /**
          * This is will check for boundaries in the following way:
@@ -45,7 +47,58 @@ public class Puzzle {
          * If home coordinate + length or width > length of row or column in matrix, word does not print
          */
 
+        //todo: X and Y need to be flipped
+        //these describe the dimensions of the grid
+        int xBound = grid[0].length;
+        int yBound = grid.length;
 
+        //these get random x,y coordinates in the grid, adding one to account for 0 inclusive/bound exclusive
+        int randomX = random.nextInt(xBound) + 1;
+        int randomY = random.nextInt(yBound) + 1;
+
+
+        //todo: catch out of bounds errors IF STATEMENT
+
+        //ghostwriter
+
+        boolean hitAWall = false;
+
+        for (int i = 0; i <= word.length(); i++) {
+
+            //try/catch block for hitting a wall
+            try {
+                //sets characters in word to spaces in grid
+                String dummy = grid[randomX][(randomY + i)];
+            } catch (IndexOutOfBoundsException ioe) {
+                hitAWall = true;
+                break;
+            }
+        }
+
+        if (hitAWall == false) {
+
+            for (int i = 0; i <= word.length(); i++) {
+
+                /**
+                 * for horizontal + i to randomY,
+                 * for vertical + i to randomX,
+                 * for diag-up - i to randomX, + i to randomY,
+                 * for diag-down add i to randomX, add i from randomY
+                 */
+
+                //try/catch block for hitting a wall
+                try {
+                    //sets characters in word to spaces in grid
+                    grid[(randomX)][randomY+i] = Character.toString(word.charAt(i));
+                } catch (IndexOutOfBoundsException ioe) {
+                    //todo: put reversal method here?
+                    break;
+                }
+
+            }
+        }
+
+        return grid;
 
     }
 
@@ -55,21 +108,21 @@ public class Puzzle {
         int width = grid.length;
         int height = grid[0].length;
 
-        Random letter = new Random();
-
         for (int x = 0; x < width; x++){
 
             for (int y = 0; y < height; y++){
 
                 //check if space is already filled
                 if (grid[x][y].equals("_")) {
-                    char c = (char) (letter.nextInt(26) + 'A');
+                    char c = (char) (random.nextInt(26) + 'a');
                     grid[x][y] = Character.toString(c);
                 }
             }
         }
 
     }
+
+    //todo: change this to return single words
 
     //this fills an arraylist with random words from the dictionary
     public ArrayList<String> wordList(int numberOfWords, int minWordLength, int maxWordLength) throws IOException {
@@ -81,8 +134,6 @@ public class Puzzle {
         while (wordList.size() < numberOfWords) {
 
             //generates random int
-
-            Random random = new Random();
 
             int randomNumber = random.nextInt(235887);
 
@@ -100,7 +151,7 @@ public class Puzzle {
                 && (randomWord.length() >= minWordLength)
                 && !wordList.contains(randomWord)) {
 
-                wordList.add(randomWord);
+                wordList.add(randomWord.toUpperCase());
             }
 
         }

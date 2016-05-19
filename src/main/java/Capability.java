@@ -1,6 +1,7 @@
 /**
  * Describes capabilities of word generation (e.g. horizontal or diagonal-up)
  */
+
 public class Capability {
 
     String name;

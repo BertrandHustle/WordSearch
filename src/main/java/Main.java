@@ -15,26 +15,30 @@ public class Main {
   public static void main(String[] args) throws IOException{
 
       Puzzle puzzle = new Puzzle();
+      Capability capability = new Capability();
 
-      String[][] grid = puzzle.GenerateGrid(5, 5);
-      puzzle.FillLetters(grid);
+      String[][] grid = puzzle.GenerateGrid(10, 10);
+      //puzzle.FillLetters(grid);
 
-      for (int x = 0; x < 5; x++){
+      ArrayList<String> wordList = puzzle.wordList(15, 2, 5);
 
-          for (int y = 0; y < 5; y++){
+      //System.out.println(wordList.get(4));
+      //System.out.println(wordList.size());
 
-              System.out.print(grid[x][y] + " ");
-
-          }
-
-          System.out.print("\n");
-
+      for (String word : wordList) {
+          puzzle.inscribeWord(word, capability, grid);
       }
 
-      ArrayList<String> wordList = puzzle.wordList(5, 2, 10);
+      //puzzle.FillLetters(grid);
 
-      System.out.println(wordList.get(4));
-      System.out.println(wordList.size());
+          for (int x = 0; x < 10; x++) {
+              for (int y = 0; y < 10; y++) {
+                  System.out.print(grid[x][y] + " ");
+              }
+              System.out.print("\n");
+          }
+
+
 
 
       /*

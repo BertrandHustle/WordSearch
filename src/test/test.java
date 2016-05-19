@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class test {
 
     Puzzle testPuzzle = new Puzzle();
+    Capability testCapability = new Capability();
 
     /**
      * Given a width of 5 and height of 5
@@ -96,5 +97,21 @@ public class test {
      * When word is passed into capability
      * Then word is output into puzzle grid
      */
+
+    @Test
+    public void whenGivenWordThenWordInscribedInPuzzleGrid() throws IOException{
+
+        //arrange
+        String testWord = "PARSIMONIOUS";
+        String[][] grid = testPuzzle.GenerateGrid(20, 20);
+
+        //act
+        String[][]testGrid = testPuzzle.inscribeWord(testWord, testCapability, grid);
+
+
+        //assert
+        assertThat(testGrid[3][2], is(Character.toString('A')));
+
+    }
 
 }
