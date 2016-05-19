@@ -68,7 +68,7 @@ public class Puzzle {
             //try/catch block for hitting a wall
             try {
                 //sets characters in word to spaces in grid
-                String dummy = grid[randomX][(randomY + i)];
+                String dummy = grid[randomX-i][(randomY + i)];
             } catch (IndexOutOfBoundsException ioe) {
                 hitAWall = true;
                 break;

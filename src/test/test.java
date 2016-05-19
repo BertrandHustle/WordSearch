@@ -3,6 +3,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -93,24 +95,33 @@ public class test {
     }
 
     /**
-     * Given a word
-     * When word is passed into capability
-     * Then word is output into puzzle grid
+     * Given a word too big for puzzle
+     * When word is output into puzzle
+     * Then word prints if it wouldn't hit a wall
      */
 
     @Test
-    public void whenGivenWordThenWordInscribedInPuzzleGrid() throws IOException{
+    public void whenGivenBigWordThenWordNotInscribedInPuzzleGrid() throws IOException{
 
         //arrange
         String testWord = "PARSIMONIOUS";
-        String[][] grid = testPuzzle.GenerateGrid(20, 20);
+        String[][] grid = testPuzzle.GenerateGrid(10, 10);
+        boolean foundLetter = false;
 
         //act
         String[][]testGrid = testPuzzle.inscribeWord(testWord, testCapability, grid);
 
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+               System.out.println(grid[x][y]);
+               if (!grid[x][y].equals("_")){
+                   foundLetter = true;
+               }
+            }
+        }
 
         //assert
-        assertThat(testGrid[3][2], is(Character.toString('A')));
+        assertThat(foundLetter, is(false));
 
     }
 
