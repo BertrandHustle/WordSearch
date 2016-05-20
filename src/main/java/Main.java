@@ -6,6 +6,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
@@ -15,19 +16,39 @@ public class Main {
   public static void main(String[] args) throws IOException{
 
       Puzzle puzzle = new Puzzle();
+      Random random = new Random();
       Capability capability = new Capability();
 
+      //test for word gen
+      int numOfWords = 3;
+
       String[][] grid = puzzle.GenerateGrid(10, 10);
-      //puzzle.FillLetters(grid);
 
-      ArrayList<String> wordList = puzzle.wordList(15, 2, 5);
+      //do exception for list with only one capability
+      ArrayList<String> capabilitiesList = new ArrayList<>();
 
-      //System.out.println(wordList.get(4));
-      //System.out.println(wordList.size());
+      capabilitiesList.add("vertical");
+      capabilitiesList.add("horizontal");
+      capabilitiesList.add("diagonal-up");
+      capabilitiesList.add("diagonal-down");
 
-      for (String word : wordList) {
-          puzzle.inscribeWord(word, "diagonal-down", grid);
+
+      for (int i = 0 ; i < numOfWords;) {
+
+          String word = puzzle.getRandomWord(3, 4);
+          int capabilitySelection = random.nextInt(capabilitiesList.size());
+
+          try {
+              capability.generateWord(word, grid, capabilitiesList.get(capabilitySelection));
+              i++;
+          } catch (IndexOutOfBoundsException ioe){
+              int x = 0;
+          }
+
       }
+
+      String test = puzzle.getRandomWord(2, 9);
+      System.out.println(test);
 
       //puzzle.FillLetters(grid);
 

@@ -1,8 +1,11 @@
+import sun.jvm.hotspot.memory.Dictionary;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Describes puzzle and its attributes
@@ -38,31 +41,7 @@ public class Puzzle {
 
     }
 
-    //this inscribes word into puzzle grid
-    public String[][] inscribeWord (String word, String direction, String[][] grid) {
 
-        /**
-         * This is will check for boundaries in the following way:
-         * Checks "home coordinate" [x][y] in matrix and length of word against capability
-         * If home coordinate + length or width > length of row or column in matrix, word does not print
-         */
-
-        Capability capability = new Capability();
-
-
-        switch (direction) {
-            case "horizontal": capability.generateHorizontal(word, grid);
-                break;
-            case "vertical": capability.generateVertical(word, grid);
-                break;
-            case "diagonal-up":capability.generateDiagonalUp(word, grid);
-                break;
-            case "diagonal-down": capability.generateDiagonalDown(word, grid);
-                break;
-        }
-
-        return grid;
-    }
 
     //this fills empty spaces in puzzle grid w/random letters
     public void FillLetters(String[][] grid){
@@ -119,6 +98,52 @@ public class Puzzle {
         }
 
         return wordList;
+    }
+
+    //returns single random word
+    public String getRandomWord(int minWordLength, int maxWordLength) throws IOException{
+
+        //scanner for dictionary
+        File dict = new File("/usr/share/dict/words");
+        Scanner scanner = new Scanner(dict);
+        scanner.useDelimiter("\\Z");
+
+        //builds list of words in dictionary
+        String[] allWords = scanner.next().split("\n");
+        List<String> wordList = Arrays.asList(allWords);
+
+        List<String> filteredWords = wordList.stream()
+                .filter(word -> word.length() >= minWordLength && word.length() <= maxWordLength)
+                .collect(Collectors.toList());
+
+        return filteredWords.get(new Random().nextInt(filteredWords.size()-1)).toUpperCase();
+
+        /*
+        //generates random int
+
+        boolean success = false;
+        String randomWord = "";
+
+        while(!success){
+
+        int randomNumber = random.nextInt(235887);
+
+        //exception handling for number 0
+        if (randomNumber == 0){
+            randomNumber = 1;
+        }
+
+        //gets random word
+        randomWord = Files.readAllLines(Paths.get("Dictionary.txt")).get(randomNumber).toUpperCase();
+
+        if ((randomWord.length() <= maxWordLength) && (randomWord.length() >= minWordLength)){
+                success = true;
+            }
+        }
+
+        return randomWord;
+        */
+
     }
 
     //Getters and setters

@@ -109,7 +109,7 @@ public class test {
         boolean foundLetter = false;
 
         //act
-        String[][]testGrid = testPuzzle.inscribeWord(testWord, "horizontal", grid);
+        String[][]testGrid = testCapability.generateWord(testWord, grid, "horizontal");
 
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
@@ -139,7 +139,7 @@ public class test {
         String testWord = "HAM";
 
         //act
-        String[][]testGrid = testPuzzle.inscribeWord(testWord, "vertical", grid);
+        String[][]testGrid = testCapability.generateWord(testWord, grid, "vertical");
 
         //assert
         assertThat((testGrid[1][1].equals("H")) && (testGrid[1][2].equals("A")) && (testGrid[1][3].equals("M")), is(true));

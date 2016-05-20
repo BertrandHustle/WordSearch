@@ -12,6 +12,8 @@ public class Capability {
 
     Random random = new Random();
 
+    //int initializer = 0;
+
     /**
      * for horizontal + i to randomY,
      * for vertical + i to randomX,
@@ -20,7 +22,7 @@ public class Capability {
      */
 
     //generates horizontal word
-    public String[][] generateHorizontal (String word, String[][] grid) {
+    public String[][] generateWord (String word, String[][] grid, String direction) {
 
         int xBound = grid.length;
         int yBound = grid[0].length;
@@ -29,167 +31,32 @@ public class Capability {
         int randomX = random.nextInt(xBound) + 1;
         int randomY = random.nextInt(yBound) + 1;
 
-        //ghostwriter, checks if word will hit wall
 
-        boolean hitAWall = false;
-
-        for (int i = 0; i <= word.length(); i++) {
-
-            //try/catch block for hitting a wall
-            try {
-                //sets characters in word to spaces in grid
-                String dummy = grid[randomX][(randomY + i)];
-            } catch (IndexOutOfBoundsException ioe) {
-                hitAWall = true;
+            /*
+            //conditional for criss-cross letters
+            if (!grid[(randomX)][randomY + i].equals(Character.toString(word.charAt(i)))
+                && !grid[(randomX)][randomY + i].equals("_")){
                 break;
             }
-        }
+            */
 
-        if (hitAWall == false) {
+            for (int i = 0; i < word.length(); i++) {
 
-            for (int i = 0; i <= word.length(); i++) {
+                //sets characters in word to spaces in grid
+                grid[randomX][randomY] = Character.toString(word.charAt(i));
 
-                //try/catch block for hitting a wall
-                try {
-                    //sets characters in word to spaces in grid
-                    grid[(randomX)][randomY + i] = Character.toString(word.charAt(i));
-                } catch (IndexOutOfBoundsException ioe) {
-                    //todo: put reversal method here?
-                    break;
+                switch (direction) {
+                    case "horizontal": randomY++;
+                        break;
+                    case "vertical": randomX++;
+                        break;
+                    case "diagonal-up": randomX-- ; randomY++;
+                        break;
+                    case "diagonal-down": randomX++; randomY++;
+                        break;
                 }
 
             }
-        }
-        return grid;
-    }
-
-
-    //generates vertical words
-    public String[][] generateVertical (String word, String[][] grid){
-        int xBound = grid.length;
-        int yBound = grid[0].length;
-
-        //these get random x,y coordinates in the grid, adding one to account for 0 inclusive/bound exclusive
-        int randomX = random.nextInt(xBound) + 1;
-        int randomY = random.nextInt(yBound) + 1;
-
-        //ghostwriter, checks if word will hit wall
-
-        boolean hitAWall = false;
-
-        for (int i = 0; i <= word.length(); i++) {
-
-            //try/catch block for hitting a wall
-            try {
-                //sets characters in word to spaces in grid
-                String dummy = grid[randomX+i][(randomY)];
-            } catch (IndexOutOfBoundsException ioe) {
-                hitAWall = true;
-                break;
-            }
-        }
-
-        if (hitAWall == false) {
-
-            for (int i = 0; i <= word.length(); i++) {
-
-                //try/catch block for hitting a wall
-                try {
-                    //sets characters in word to spaces in grid
-                    grid[(randomX+i)][randomY] = Character.toString(word.charAt(i));
-                } catch (IndexOutOfBoundsException ioe) {
-                    //todo: put reversal method here?
-                    break;
-                }
-
-            }
-        }
-        return grid;
-    }
-
-    //generates diagonal-up words
-    public String[][] generateDiagonalUp (String word, String[][] grid){
-        int xBound = grid.length;
-        int yBound = grid[0].length;
-
-        //these get random x,y coordinates in the grid, adding one to account for 0 inclusive/bound exclusive
-        int randomX = random.nextInt(xBound) + 1;
-        int randomY = random.nextInt(yBound) + 1;
-
-        //ghostwriter, checks if word will hit wall
-
-        boolean hitAWall = false;
-
-        for (int i = 0; i <= word.length(); i++) {
-
-            //try/catch block for hitting a wall
-            try {
-                //sets characters in word to spaces in grid
-                String dummy = grid[randomX-i][(randomY+i)];
-            } catch (IndexOutOfBoundsException ioe) {
-                hitAWall = true;
-                break;
-            }
-        }
-
-        if (hitAWall == false) {
-
-            for (int i = 0; i <= word.length(); i++) {
-
-                //try/catch block for hitting a wall
-                try {
-                    //sets characters in word to spaces in grid
-                    grid[(randomX-i)][randomY + i] = Character.toString(word.charAt(i));
-                } catch (IndexOutOfBoundsException ioe) {
-                    //todo: put reversal method here?
-                    break;
-                }
-
-            }
-        }
-        return grid;
-    }
-
-    //generates words diagonal-down
-    public String[][] generateDiagonalDown (String word, String[][] grid){
-        int xBound = grid.length;
-        int yBound = grid[0].length;
-
-        //these get random x,y coordinates in the grid, adding one to account for 0 inclusive/bound exclusive
-        int randomX = random.nextInt(xBound) + 1;
-        int randomY = random.nextInt(yBound) + 1;
-
-        //ghostwriter, checks if word will hit wall
-
-        boolean hitAWall = false;
-
-        for (int i = 0; i <= word.length(); i++) {
-
-            //try/catch block for hitting a wall
-            try {
-                //sets characters in word to spaces in grid
-                String dummy = grid[randomX+i][(randomY+i)];
-            } catch (IndexOutOfBoundsException ioe) {
-                hitAWall = true;
-                break;
-            }
-        }
-
-        if (hitAWall == false) {
-
-            for (int i = 0; i <= word.length(); i++) {
-
-                //try/catch block for hitting a wall
-                try {
-                    //sets characters in word to spaces in grid
-                    grid[(randomX+i)][randomY + i] = Character.toString(word.charAt(i));
-                } catch (IndexOutOfBoundsException ioe) {
-                    //todo: put reversal method here?
-                    break;
-                }
-
-            }
-        }
         return grid;
     }
 
