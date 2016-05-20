@@ -20,9 +20,9 @@ public class Main {
       Capability capability = new Capability();
 
       //test for word gen
-      int numOfWords = 3;
+      int numOfWords = 8;
 
-      String[][] grid = puzzle.GenerateGrid(10, 10);
+      String[][] grid = puzzle.GenerateGrid(20, 20);
 
       //do exception for list with only one capability
       ArrayList<String> capabilitiesList = new ArrayList<>();
@@ -32,14 +32,16 @@ public class Main {
       capabilitiesList.add("diagonal-up");
       capabilitiesList.add("diagonal-down");
 
+      ArrayList<String> words = new ArrayList<>();
 
       for (int i = 0 ; i < numOfWords;) {
 
-          String word = puzzle.getRandomWord(3, 4);
+          String word = puzzle.getRandomWord(7, 7);
           int capabilitySelection = random.nextInt(capabilitiesList.size());
 
           try {
               capability.generateWord(word, grid, capabilitiesList.get(capabilitySelection));
+              words.add(word);
               i++;
           } catch (IndexOutOfBoundsException ioe){
               int x = 0;
@@ -47,17 +49,11 @@ public class Main {
 
       }
 
-      String test = puzzle.getRandomWord(2, 9);
-      System.out.println(test);
-
       //puzzle.FillLetters(grid);
 
-          for (int x = 0; x < 10; x++) {
-              for (int y = 0; y < 10; y++) {
-                  System.out.print(grid[x][y] + " ");
-              }
-              System.out.print("\n");
-          }
+      puzzle.printPuzzle(grid);
+
+      int x = 0;
 
 
 

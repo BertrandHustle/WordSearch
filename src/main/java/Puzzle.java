@@ -146,6 +146,20 @@ public class Puzzle {
 
     }
 
+    public static void printPuzzle (String[][] grid){
+
+        int xBound = grid.length;
+        int yBound = grid[0].length;
+
+        for (int x = 0; x < xBound; x++) {
+            for (int y = 0; y < yBound; y++) {
+                System.out.print(grid[x][y] + " ");
+            }
+            System.out.print("\n");
+        }
+
+    }
+
     //Getters and setters
 
     public int getWidth() {

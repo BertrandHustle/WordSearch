@@ -22,7 +22,7 @@ public class Capability {
      */
 
     //generates horizontal word
-    public String[][] generateWord (String word, String[][] grid, String direction) {
+    public String[][] generateWord(String word, String[][] grid, String direction) {
 
         int xBound = grid.length;
         int yBound = grid[0].length;
@@ -31,33 +31,81 @@ public class Capability {
         int randomX = random.nextInt(xBound) + 1;
         int randomY = random.nextInt(yBound) + 1;
 
+        //ghostwriter (scouts out if word will fit)
 
-            /*
-            //conditional for criss-cross letters
-            if (!grid[(randomX)][randomY + i].equals(Character.toString(word.charAt(i)))
-                && !grid[(randomX)][randomY + i].equals("_")){
-                break;
+        boolean noWallsorWords = true;
+
+        for (int i = 0; i < word.length(); i++) {
+
+            String currentPoint = grid[randomX][randomY];
+            String currentChar = Character.toString(word.charAt(i));
+
+            //sets characters in word to spaces in grid
+
+            if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
+                int x = 0;
+            } else {
+                noWallsorWords = false;
+                grid[xBound + 10][yBound + 10] = " ";
             }
-            */
+
+            switch (direction) {
+                case "horizontal":
+                    randomY++;
+                    break;
+                case "vertical":
+                    randomX++;
+                    break;
+                case "diagonal-up":
+                    randomX--;
+                    randomY++;
+                    break;
+                case "diagonal-down":
+                    randomX++;
+                    randomY++;
+                    break;
+            }
+        }
+
+
+        if (noWallsorWords) {
 
             for (int i = 0; i < word.length(); i++) {
 
-                //sets characters in word to spaces in grid
-                grid[randomX][randomY] = Character.toString(word.charAt(i));
+                String currentPoint = grid[randomX][randomY];
+                String currentChar = Character.toString(word.charAt(i));
 
-                switch (direction) {
-                    case "horizontal": randomY++;
-                        break;
-                    case "vertical": randomX++;
-                        break;
-                    case "diagonal-up": randomX-- ; randomY++;
-                        break;
-                    case "diagonal-down": randomX++; randomY++;
-                        break;
+                //sets characters in word to spaces in grid
+                if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
+                    grid[randomX][randomY] = currentChar;
+                } else {
+                    grid[xBound + 10][yBound + 10] = " ";
                 }
 
+                switch (direction) {
+                    case "horizontal":
+                        randomY++;
+                        break;
+                    case "vertical":
+                        randomX++;
+                        break;
+                    case "diagonal-up":
+                        randomX--;
+                        randomY++;
+                        break;
+                    case "diagonal-down":
+                        randomX++;
+                        randomY++;
+                        break;
+                }
             }
+        }
+
+        Puzzle.printPuzzle(grid);
+        System.out.println(" ");
+
         return grid;
     }
-
 }
+
+
