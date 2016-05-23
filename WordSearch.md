@@ -142,7 +142,7 @@ To generate a puzzle, WS will take the following into account.
 				R
 				T
 				
-	2.2. CC words will be handled when words are written into the puzzle grid.  Words will
+	2.2. CC words will be handled when words are written into the puzzle grid.  Word will
 	be written letter by letter according to the rules which that word's capability 
 	describes.  If a grid square is reached which already contains a letter, WS checks 
 	to see if that letter matches the letter about to be written.  If they match, the WS

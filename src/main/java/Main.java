@@ -20,9 +20,9 @@ public class Main {
       Capability capability = new Capability();
 
       //test for word gen
-      int numOfWords = 8;
+      int numOfWords = 10;
 
-      String[][] grid = puzzle.GenerateGrid(20, 20);
+      String[][] grid = puzzle.GenerateGrid(20, 40);
 
       //do exception for list with only one capability
       ArrayList<String> capabilitiesList = new ArrayList<>();
@@ -32,11 +32,16 @@ public class Main {
       capabilitiesList.add("diagonal-up");
       capabilitiesList.add("diagonal-down");
 
-      ArrayList<String> words = new ArrayList<>();
+      //todo: put in condition for trying new puzzle if tests don't pass for 100 tries
+
+      ArrayList<Word> words = new ArrayList<>();
 
       for (int i = 0 ; i < numOfWords;) {
 
-          String word = puzzle.getRandomWord(7, 7);
+          //this is the word we'll be passing in
+          Word word = new Word();
+          word.setWord(puzzle.getRandomWord(4, 10));
+
           int capabilitySelection = random.nextInt(capabilitiesList.size());
 
           try {

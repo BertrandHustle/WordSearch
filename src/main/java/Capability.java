@@ -22,8 +22,30 @@ public class Capability {
      * for diag-down + i to randomX, + i to randomY
      */
 
-    //generates horizontal word
-    public String[][] generateWord(String word, String[][] grid, String direction) {
+    public static void directionSwitch(int X, int Y, String direction){
+
+        switch (direction) {
+            case "horizontal":
+                Y++;
+                break;
+            case "vertical":
+                X++;
+                break;
+            case "diagonal-up":
+                X--;
+                Y++;
+                break;
+            case "diagonal-down":
+                X++;
+                Y++;
+                break;
+        }
+
+    }
+
+    //generates word (more accurately: generates updated grid containing word)
+    //todo: this needs to take a Word as argument
+    public String[][] generateWord(Word passedInWord, String[][] grid, String direction) {
 
         int xBound = grid.length;
         int yBound = grid[0].length;
@@ -32,10 +54,12 @@ public class Capability {
         int randomX = random.nextInt(xBound) + 1;
         int randomY = random.nextInt(yBound) + 1;
 
+        //gets word
+        String word = passedInWord.getWord();
+
         //ghostwriter (scouts out if word will fit)
 
         boolean noWallsorWords = true;
-        //int[][] coordinateSet;
 
         int testRandomX = randomX;
         int testRandomY = randomY;
@@ -48,11 +72,15 @@ public class Capability {
             //sets characters in word to spaces in grid
 
             if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
+                //todo: get this to put coordinates in arraylist
                 int x = 0;
             } else {
                 noWallsorWords = false;
                 grid[xBound + 10][yBound + 10] = " ";
             }
+
+            //Capability.directionSwitch(testRandomX, testRandomY, direction);
+
 
             switch (direction) {
                 case "horizontal":
@@ -70,6 +98,7 @@ public class Capability {
                     testRandomY++;
                     break;
             }
+
         }
 
 
@@ -87,6 +116,9 @@ public class Capability {
                     grid[xBound + 10][yBound + 10] = " ";
                 }
 
+                //Capability.directionSwitch(randomX, randomY, direction);
+
+
                 switch (direction) {
                     case "horizontal":
                         randomY++;
@@ -103,6 +135,7 @@ public class Capability {
                         randomY++;
                         break;
                 }
+
             }
         }
 
