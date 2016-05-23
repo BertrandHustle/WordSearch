@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Scott on 5/19/16.
- */
 public class Words {
 
-    String word;
+    private String word;
+    private int xOrigin;
+    private int yOrigin;
+    private int xEnd;
+    private int yEnd;
 
-    HashMap<String, Integer> location = new HashMap<>();
+
 
 }

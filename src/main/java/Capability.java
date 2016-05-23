@@ -35,12 +35,12 @@ public class Capability {
         //ghostwriter (scouts out if word will fit)
 
         boolean noWallsorWords = true;
-        HashMap <Integer, Integer> coordinateSet = new HashMap<>();
+        //int[][] coordinateSet;
+
+        int testRandomX = randomX;
+        int testRandomY = randomY;
 
         for (int i = 0; i < word.length(); i++) {
-
-            int testRandomX = randomX;
-            int testRandomY = randomY;
 
             String currentPoint = grid[testRandomX][testRandomY];
             String currentChar = Character.toString(word.charAt(i));
@@ -56,18 +56,18 @@ public class Capability {
 
             switch (direction) {
                 case "horizontal":
-                    randomY++;
+                    testRandomY++;
                     break;
                 case "vertical":
-                    randomX++;
+                    testRandomX++;
                     break;
                 case "diagonal-up":
-                    randomX--;
-                    randomY++;
+                    testRandomX--;
+                    testRandomY++;
                     break;
                 case "diagonal-down":
-                    randomX++;
-                    randomY++;
+                    testRandomX++;
+                    testRandomY++;
                     break;
             }
         }
