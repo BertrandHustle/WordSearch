@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -34,10 +35,14 @@ public class Capability {
         //ghostwriter (scouts out if word will fit)
 
         boolean noWallsorWords = true;
+        HashMap <Integer, Integer> coordinateSet = new HashMap<>();
 
         for (int i = 0; i < word.length(); i++) {
 
-            String currentPoint = grid[randomX][randomY];
+            int testRandomX = randomX;
+            int testRandomY = randomY;
+
+            String currentPoint = grid[testRandomX][testRandomY];
             String currentChar = Character.toString(word.charAt(i));
 
             //sets characters in word to spaces in grid
