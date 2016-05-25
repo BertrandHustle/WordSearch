@@ -19,7 +19,8 @@ public class Puzzle {
     int numberOfWords;
     int minWordLength;
     int maxWordLength;
-    ArrayList<String> capabilities;
+    String[][] grid;
+    ArrayList<Capability> capabilities;
 
     Random random = new Random();
 
@@ -202,11 +203,19 @@ public class Puzzle {
         this.maxWordLength = maxWordLength;
     }
 
-    public ArrayList<String> getCapabilities() {
+    public ArrayList<Capability> getCapabilities() {
         return capabilities;
     }
 
-    public void setCapabilities(ArrayList<String> capabilities) {
+    public void setCapabilities(ArrayList<Capability> capabilities) {
         this.capabilities = capabilities;
+    }
+
+    public String[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(String[][] grid) {
+        this.grid = grid;
     }
 }

@@ -1,4 +1,6 @@
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import spark.Spark;
 import spark.ModelAndView;
 
@@ -18,6 +20,8 @@ public class Main {
       long startTime = System.currentTimeMillis();
 
       Puzzle puzzle = new Puzzle();
+      ArrayList<Capability>capabilities = new ArrayList<>();
+      puzzle.setCapabilities(capabilities);
       Random random = new Random();
       Capability capability = new Capability();
 
@@ -33,6 +37,17 @@ public class Main {
       capabilitiesList.add("horizontal");
       capabilitiesList.add("diagonal-up");
       capabilitiesList.add("diagonal-down");
+
+      for(String s : capabilitiesList){
+          Capability newCapability = new Capability();
+          newCapability.setName(s);
+          newCapability.setKeyword(s);
+          newCapability.setDescription("Adds words at a "+s+" angle in the puzzle");
+
+          puzzle.getCapabilities().add(newCapability);
+      }
+
+
 
       //todo: put in condition for trying new puzzle if tests don't pass for 100 tries
 
@@ -64,31 +79,18 @@ public class Main {
 
       System.out.println((System.currentTimeMillis() - startTime));
 
-      /*
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
+
+    //port(Integer.valueOf(System.getenv("PORT")));
+    //staticFileLocation("/public");
 
       //capabilities
       Spark.get(
               "/capabilities",
               (request, response) -> {
-                  String json = "[\n" +
-                          "    {\n" +
-                          "        \"name\": \"Horizontal\",\n" +
-                          "        \"description\": \"Adds words horizontally in the puzzle\",\n" +
-                          "        \"keyword\": \"horizontal\" \n" +
-                          "    },\n" +
-                          "    {\n" +
-                          "        \"name\": \"Vertical\",\n" +
-                          "        \"description\": \"Adds words vertically in the puzzle\",\n" +
-                          "        \"keyword\": \"horizontal\" \n" +
-                          "    },\n" +
-                          "    {\n" +
-                          "        \"name\": \"Angle\",\n" +
-                          "        \"description\": \"Adds words at an angle in the puzzle\",\n" +
-                          "        \"keyword\": \"angle\" \n" +
-                          "    }\n" +
-                          "]";
+
+                  Gson gson = new GsonBuilder().create();
+                  String json = gson.toJson(capabilitiesList);
+
                   return json;
               }
       );
@@ -149,7 +151,7 @@ public class Main {
               }
       );
 
-      */
+
 
 
   }

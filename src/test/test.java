@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.oracle.javafx.jmx.json.JSONReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,12 +28,12 @@ public class test {
      */
 
     @Test
-    public void whenWidth5AndHeight5ThenOutputsGrid(){
+    public void whenWidth5AndHeight5ThenOutputsGrid() {
 
         //arrange
 
         //act
-        String[][]testGrid = testPuzzle.GenerateGrid(5, 5);
+        String[][] testGrid = testPuzzle.GenerateGrid(5, 5);
 
         //assert
         assertThat(testGrid.length * testGrid[0].length, is(25));
@@ -44,7 +47,7 @@ public class test {
      */
 
     @Test
-    public void whenFilled3TimesThenSpaceHasDifferentLetterEachTime(){
+    public void whenFilled3TimesThenSpaceHasDifferentLetterEachTime() {
 
         //arrange
         String[][] testGrid = testPuzzle.GenerateGrid(4, 5);
@@ -73,7 +76,7 @@ public class test {
      */
 
     @Test
-    public void whenGivenDictionaryThenIndex2IsRandomWord() throws IOException{
+    public void whenGivenDictionaryThenIndex2IsRandomWord() throws IOException {
 
         //arrange
 
@@ -89,8 +92,8 @@ public class test {
         //assert
         assertThat(testWordList.size(), is(5));
         assertThat(testWord.equals(testWord2) &&
-        testWord2.equals(testWord3) &&
-        testWord.equals(testWord3), is(false));
+                testWord2.equals(testWord3) &&
+                testWord.equals(testWord3), is(false));
 
     }
 
@@ -101,7 +104,7 @@ public class test {
      */
 
     @Test
-    public void whenGivenBigWordThenWordNotInscribedInPuzzleGrid() throws IOException{
+    public void whenGivenBigWordThenWordNotInscribedInPuzzleGrid() throws IOException {
 
         //arrange
         Word word = new Word();
@@ -111,14 +114,14 @@ public class test {
         boolean foundLetter = false;
 
         //act
-        String[][]testGrid = testCapability.generateWord(word, grid, "horizontal");
+        String[][] testGrid = testCapability.generateWord(word, grid, "horizontal");
 
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-               System.out.println(grid[x][y]);
-               if (!grid[x][y].equals("_")){
-                   foundLetter = true;
-               }
+                System.out.println(grid[x][y]);
+                if (!grid[x][y].equals("_")) {
+                    foundLetter = true;
+                }
             }
         }
 
@@ -128,36 +131,51 @@ public class test {
     }
 
     /**
-     * Given a capability
-     * When word inscription is run
-     * Then word is inscribed in correct direction
+     * Given a json String with the right parameters
+     * When puzle generator is run
+     * Then outputs a puzzle
      */
 
     @Test
-    public void whenGivenCapabilityThenWordDirectionIsCorrect(){
-
+    public void whenGivenAJsonThenOutputsPuzzle(String json){
         //arrange
-        String[][]grid = testPuzzle.GenerateGrid(1, 3);
-        Word word = new Word();
-        word.setWord("HAM");
-        String [][] resultGrid;
-
+        boolean pass = true;
+        String testJson = "{\n" +
+                "   \"width\": 20,\n" +
+                "   \"height\": 20,\n" +
+                "   \"words\": 10,\n" +
+                "   \"minLength\": 4,\n" +
+                "   \"maxLength\": 8,\n" +
+                "   \"capabilities\": [\n" +
+                "      \"horizontal\",\n" +
+                "      \"vertical\",\n" +
+                "      \"diagonal-up\"\n" +
+                "   ]\n" +
+                "}";
         //act
+        Gson gson = new GsonBuilder().create();
+        Puzzle testPuzzle = gson.fromJson(testJson, Puzzle.class);
+        String[][] testGrid = testPuzzle.getGrid();
 
-        boolean b = true;
-        while (true) {
-            try {
-                resultGrid = testCapability.generateWord(word, grid, "vertical");
-                b = false;
-            } catch (IndexOutOfBoundsException ioe) {
-                int x = 0;
+        for (int x = 0; x < testPuzzle.getHeight(); x++) {
+            for (int y = 0; y < testPuzzle.getWidth(); y++) {
+                if (testGrid[x][y].equals("_")){
+                    pass = false;
+                }
             }
+
         }
 
         //assert
-        //assertThat((resultGrid[1][1].equals("H")) && (resultGrid[1][2].equals("A")) && (resultGrid[1][3].equals("M")), is(true));
+        assertThat((testPuzzle.getCapabilities().contains("horizontal"))
+        &&(testPuzzle.getCapabilities().contains("vertical"))
+        &&(testPuzzle.getCapabilities().contains("diagonal-up"))&& pass, is(true));
+
 
 
     }
-
 }
+
+
+
+
