@@ -11,7 +11,6 @@ public class Capability {
     String description;
     String keyword;
 
-    Random random = new Random();
 
     //int initializer = 0;
 
@@ -46,6 +45,8 @@ public class Capability {
     //generates word (more accurately: generates updated grid containing word)
     //todo: this needs to take a Word as argument
     public String[][] generateWord(Word passedInWord, String[][] grid, String direction) {
+
+        Random random = new Random();
 
         int xBound = grid.length;
         int yBound = grid[0].length;

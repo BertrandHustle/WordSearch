@@ -1,3 +1,4 @@
+import com.google.gson.annotations.Expose;
 import sun.jvm.hotspot.memory.Dictionary;
 
 import java.io.File;
@@ -14,15 +15,16 @@ public class Puzzle {
 
     //todo: set Puzzle properties to user constraints when grid is generated
 
-    int Width;
-    int Height;
-    int numberOfWords;
-    int minWordLength;
-    int maxWordLength;
-    String[][] grid;
-    ArrayList<Capability> capabilities;
+    private int Width;
+    private int Height;
+    private int numberOfWords;
+    private int minWordLength;
+    private int maxWordLength;
+    @Expose
+    private String[][] grid;
+    private ArrayList<Capability> capabilities;
 
-    Random random = new Random();
+    private Random random = new Random();
 
     //generates grid
     public String[][] GenerateGrid(int width, int height){
