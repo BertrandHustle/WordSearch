@@ -72,7 +72,8 @@ public class Capability {
             //sets characters in word to spaces in grid
 
             if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
-                //todo: get this to put coordinates in arraylist
+                //todo: use (get char at 0 index) and word.length - 1 to track coordinates
+
                 int x = 0;
             } else {
                 noWallsorWords = false;

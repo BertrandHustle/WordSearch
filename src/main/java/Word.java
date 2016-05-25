@@ -4,18 +4,14 @@ import java.util.HashMap;
 public class Word {
 
     private String word;
-    private int xOrigin;
-    private int yOrigin;
-    private int xEnd;
-    private int yEnd;
-
-    public int getyEnd() {
-        return yEnd;
-    }
-
-    public void setyEnd(int yEnd) {
-        this.yEnd = yEnd;
-    }
+    //word origin point (X)
+    private int x1;
+    //word origin point (Y)
+    private int y1;
+    //word endpoint (X)
+    private int x2;
+    //word endpoint (Y)
+    private int y2;
 
     public String getWord() {
         return word;
@@ -25,27 +21,35 @@ public class Word {
         this.word = word;
     }
 
-    public int getxOrigin() {
-        return xOrigin;
+    public int getX1() {
+        return x1;
     }
 
-    public void setxOrigin(int xOrigin) {
-        this.xOrigin = xOrigin;
+    public void setX1(int x1) {
+        this.x1 = x1;
     }
 
-    public int getyOrigin() {
-        return yOrigin;
+    public int getY1() {
+        return y1;
     }
 
-    public void setyOrigin(int yOrigin) {
-        this.yOrigin = yOrigin;
+    public void setY1(int y1) {
+        this.y1 = y1;
     }
 
-    public int getxEnd() {
-        return xEnd;
+    public int getX2() {
+        return x2;
     }
 
-    public void setxEnd(int xEnd) {
-        this.xEnd = xEnd;
+    public void setX2(int x2) {
+        this.x2 = x2;
+    }
+
+    public int getY2() {
+        return y2;
+    }
+
+    public void setY2(int y2) {
+        this.y2 = y2;
     }
 }

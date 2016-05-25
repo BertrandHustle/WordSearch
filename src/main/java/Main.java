@@ -15,6 +15,8 @@ public class Main {
 
   public static void main(String[] args) throws IOException{
 
+      long startTime = System.currentTimeMillis();
+
       Puzzle puzzle = new Puzzle();
       Random random = new Random();
       Capability capability = new Capability();
@@ -60,8 +62,7 @@ public class Main {
 
       int x = 0;
 
-
-
+      System.out.println((System.currentTimeMillis() - startTime));
 
       /*
     port(Integer.valueOf(System.getenv("PORT")));
