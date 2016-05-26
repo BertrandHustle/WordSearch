@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Created by Scott on 5/18/16.
  */
 public class test {
-
+    Random testRandom = new Random();
     Puzzle testPuzzle = new Puzzle();
     Capability testCapability = new Capability();
 
@@ -133,7 +134,7 @@ public class test {
      */
 
     @Test
-    public void whenGivenAJsonThenOutputsPuzzle(String json){
+    public void whenGivenAJsonThenOutputsPuzzle(){
         //arrange
         boolean pass = true;
         String testJson = "{\n" +
@@ -175,17 +176,67 @@ public class test {
      * Then coordinates of first and last letter matach puzzle coordinates
      */
     @Test
-    public void whenWordOutputThenCoordinatesMatchPuzzle(){
+    public void whenWordOutputThenCoordinatesMatchPuzzle() throws IOException {
         //arrange
         String[][] testGrid = testPuzzle.GenerateGrid(20, 40);
 
 
         //act
+        ArrayList<Capability>capabilities = new ArrayList<>();
+        testPuzzle.setCapabilities(capabilities);
 
 
+        int numOfWords = 10;
 
+        String[][] grid = testPuzzle.GenerateGrid(20, 40);
+        testPuzzle.setPuzzle(grid);
 
+        //do exception for list with only one capability
+        ArrayList<String> capabilitiesList = new ArrayList<>();
+
+        capabilitiesList.add("vertical");
+        capabilitiesList.add("horizontal");
+        capabilitiesList.add("diagonal-up");
+        capabilitiesList.add("diagonal-down");
+
+        for(String s : capabilitiesList){
+            Capability newCapability = new Capability();
+            newCapability.setName(s);
+            newCapability.setKeyword(s);
+            newCapability.setDescription("Adds words at a "+s+" angle in the puzzle");
+
+            testPuzzle.getCapabilities().add(newCapability);
+        }
+
+        ArrayList<Word> words = new ArrayList<>();
+
+        for (int i = 0 ; i < numOfWords;) {
+
+            //this is the word we'll be passing in
+            Word word = new Word();
+            word.setWord(testPuzzle.getRandomWord(4, 10));
+
+            int capabilitySelection = testRandom.nextInt(capabilitiesList.size());
+
+            try {
+                testCapability.generateWord(word, grid, capabilitiesList.get(capabilitySelection));
+                words.add(word);
+                testPuzzle.getWords().add(word);
+                i++;
+            } catch (IndexOutOfBoundsException ioe){
+                int x = 0;
+            }
+
+        }
+
+        String testWord = words.get(0).getWord();
+        char firstLetter = words.get(0).getWord().charAt(0);
+        char lastLetter = testWord.charAt(testWord.length()-1);
+        String testString = testPuzzle.getPuzzle()[words.get(0).getY1()][words.get(0).getX1()];
+        String testString2 = testPuzzle.getPuzzle()[words.get(0).getY2()][words.get(0).getX2()];
         //assert
+        assertThat(lastLetter, is(testString2));
+        //assertThat(lastLetter, is(testString2));
     }
 }
 
