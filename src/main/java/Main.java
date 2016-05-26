@@ -2,16 +2,10 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.Spark;
-import spark.ModelAndView;
-
-import spark.template.mustache.MustacheTemplateEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
 
 public class Main {
 
@@ -96,14 +90,22 @@ public class Main {
               "/puzzle",
               (request, response) -> {
 
-                  //todo: rename field to "puzzle"
-                  //todo: add words list with coordinates
+                  //todo: check word coordinates
 
                   Puzzle gsonPuzzle = new Puzzle();
-                  gsonPuzzle.setGrid(grid);
+                  gsonPuzzle.setPuzzle(grid);
 
                   Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                  for (Word word : words){
+                      gsonPuzzle.words.add(word);
+                  }
                   String json = gson.toJson(gsonPuzzle);
+
+
+                  //String jsonWords = gson.toJson(words);
+
+                  System.out.println(gsonPuzzle);
+                  System.out.println(words);
 
                   return json;
               }

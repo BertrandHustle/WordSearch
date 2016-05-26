@@ -73,7 +73,6 @@ public class Capability {
             //sets characters in word to spaces in grid
 
             if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
-                //todo: use (get char at 0 index) and word.length - 1 to track coordinates
 
                 int x = 0;
             } else {
@@ -112,9 +111,21 @@ public class Capability {
                 String currentChar = Character.toString(word.charAt(i));
 
                 //sets characters in word to spaces in grid
+                //todo: use (get char at 0 index) and word.length - 1 to track coordinates
                 if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
                     grid[randomX][randomY] = currentChar;
+
+                    if(i == 0){
+                        passedInWord.setX1(randomY);
+                        passedInWord.setY1(randomX);
+                    }
+                    if(i == word.length()-1){
+                        passedInWord.setX2(randomY);
+                        passedInWord.setY2(randomX);
+                    }
+
                 } else {
+                    //guarantees out of bounds exception
                     grid[xBound + 10][yBound + 10] = " ";
                 }
 

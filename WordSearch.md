@@ -5,8 +5,8 @@ Word Search
 The word search app (hence to be referred to as WS) will be capable of generating a 
 puzzle of variant height and width, as defined by the user within certain constraints 
 (e.g. the puzzle cannot be a single letter tall or wide).  WS will be able to take a 
-user-defined grid (again, within certain constraints) and generate a user-defined 
-number of words inside said grid.  These words can be generated horizontally, vertically, 
+user-defined puzzle (again, within certain constraints) and generate a user-defined
+number of words inside said puzzle.  These words can be generated horizontally, vertically,
 or diagonally (either angled upward or downward).  WS will not support generating words 
 backwards (i.e. 'sentence' as 'ecnetnes'), as this is counter-intuitive and hard to read
 for the user.  WS will also support "criss-crossing" words, i.e. words that intersect each
@@ -36,7 +36,7 @@ As detailed above, WS will have the capability to generate a word search puzzle
 consisting of a random selection of words surrounded by a random selection of letters. 
 
 After inserting a random selection of words from an English dictionary into
-a user-defined grid, WS will then fill every remaining blank square within the grid with a
+a user-defined puzzle, WS will then fill every remaining blank square within the puzzle with a
 random letter of the English alphabet. 
 
 WS will be capable of handling difficult requests such as the following:
@@ -70,18 +70,18 @@ and can be generated only vertically. The JSON request for this is as follows:
 	}
 
 List of steps in plain English: 
-1. Define grid
-2. Define height of grid
-3. Set height of grid
-4. Define width of grid
-5. Set width of grid
-6. Draw left wall of grid (by height)
-7. Draw bottom wall of grid (by width)
-8. Draw right wall of grid (by height)
-9. Draw top wall of grid (by width)
-10. Draw vertical lines inside of grid (by width, e.g. if width is 6 then draw 6 
+1. Define puzzle
+2. Define height of puzzle
+3. Set height of puzzle
+4. Define width of puzzle
+5. Set width of puzzle
+6. Draw left wall of puzzle (by height)
+7. Draw bottom wall of puzzle (by width)
+8. Draw right wall of puzzle (by height)
+9. Draw top wall of puzzle (by width)
+10. Draw vertical lines inside of puzzle (by width, e.g. if width is 6 then draw 6
 	evenly-spaced vertical lines.
-11. Draw horizontal lines inside of grid (by height, e.g. if height is 6 then draw 6 
+11. Draw horizontal lines inside of puzzle (by height, e.g. if height is 6 then draw 6
 	evenly-spaced horizontal lines.
 12. Define number of words in puzzle
 13. Set number of words in puzzle
@@ -96,12 +96,12 @@ List of steps in plain English:
 	written. 
 21. Add capabilities to list of capabilities (e.g. "horizontal" or "diagonal-upwards")
 22. Select the first word from the WList and assign a capability from CList at random to it
-23. Pick random square in puzzle (making sure that the word can fit in the puzzle grid, 
-given its capability, if it starts from that square) and write word in puzzle grid in 
-all upper-case letters.  If the word overlaps another word already in the puzzle grid, 
+23. Pick random square in puzzle (making sure that the word can fit in the puzzle puzzle,
+given its capability, if it starts from that square) and write word in puzzle puzzle in
+all upper-case letters.  If the word overlaps another word already in the puzzle puzzle,
 ensure that the letter at which the two words cross matches
-24. Repeat steps 22 and 23 until all words from WList are written in puzzle grid
-25. Fill all empty squares in puzzle grid with random letters from the English Latin
+24. Repeat steps 22 and 23 until all words from WList are written in puzzle puzzle
+25. Fill all empty squares in puzzle puzzle with random letters from the English Latin
 alphabet
 26. Write WList below puzzle
 
@@ -142,9 +142,9 @@ To generate a puzzle, WS will take the following into account.
 				R
 				T
 				
-	2.2. CC words will be handled when words are written into the puzzle grid.  Word will
+	2.2. CC words will be handled when words are written into the puzzle puzzle.  Word will
 	be written letter by letter according to the rules which that word's capability 
-	describes.  If a grid square is reached which already contains a letter, WS checks 
+	describes.  If a puzzle square is reached which already contains a letter, WS checks
 	to see if that letter matches the letter about to be written.  If they match, the WS
 	continues to write the word into the puzzle.  If they do not match, WS moves backwards
 	and erases each letter of that word. 
@@ -153,7 +153,7 @@ To generate a puzzle, WS will take the following into account.
 
 	3.1. WS will contain a number of key data structures, which are detailed here.
 	
-		3.11. Word set: contains the words which are written into the puzzle grid. This
+		3.11. Word set: contains the words which are written into the puzzle puzzle. This
 		will also be displayed beneath the puzzle itself (this may be handled on the 
 		iOS side). 
 		
@@ -166,7 +166,7 @@ To generate a puzzle, WS will take the following into account.
 		Latin alphabet. 
 		
 		3.14. User-defined constraints: this is a list of user-defined constraints for the 
-		puzzle (e.g. puzzle grid height).  This will be a property of the puzzle itself. 
+		puzzle (e.g. puzzle puzzle height).  This will be a property of the puzzle itself.
 		
 	3.2. WS will also include a puzzle-generation method.  This method will be separate 
 	from the main method.  
@@ -219,11 +219,11 @@ To generate a puzzle, WS will take the following into account.
 	
 		5.31. Methods
 		
-			5.311. GenerateGrid(int Width, int Height): generates grid at given width/
+			5.311. GenerateGrid(int Width, int Height): generates puzzle at given width/
 			height
 			
 			5.312. GenerateWord(String word, Capability capability): 
-			checks grid for blank space, generates word letter-by-letter
+			checks puzzle for blank space, generates word letter-by-letter
 			
 				5.3121. Criss-crossing checking will occur HERE
 			
@@ -232,9 +232,9 @@ To generate a puzzle, WS will take the following into account.
 		
 		5.32. Properties
 		
-			5.321. int width: describes width of puzzle grid 
+			5.321. int width: describes width of puzzle puzzle
 			
-			5.322. int height: describes height of puzzle grid 
+			5.322. int height: describes height of puzzle puzzle
 			
 			5.323. int minWordLength: describes minimum length of word to be put in puzzle
 			

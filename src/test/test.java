@@ -1,13 +1,9 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.oracle.javafx.jmx.json.JSONReader;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -155,7 +151,7 @@ public class test {
         //act
         Gson gson = new GsonBuilder().create();
         Puzzle testPuzzle = gson.fromJson(testJson, Puzzle.class);
-        String[][] testGrid = testPuzzle.getGrid();
+        String[][] testGrid = testPuzzle.getPuzzle();
 
         for (int x = 0; x < testPuzzle.getHeight(); x++) {
             for (int y = 0; y < testPuzzle.getWidth(); y++) {
@@ -173,6 +169,23 @@ public class test {
 
 
 
+    }
+    /**Given a word
+     * When word is output into puzzle
+     * Then coordinates of first and last letter matach puzzle coordinates
+     */
+    @Test
+    public void whenWordOutputThenCoordinatesMatchPuzzle(){
+        //arrange
+        String[][] testGrid = testPuzzle.GenerateGrid(20, 40);
+
+
+        //act
+
+
+
+
+        //assert
     }
 }
 

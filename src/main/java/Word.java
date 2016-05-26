@@ -1,17 +1,23 @@
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Word {
-
-    private String word;
+    @Expose
+    String word;
     //word origin point (X)
-    private int x1;
+    @Expose
+    int x1;
     //word origin point (Y)
-    private int y1;
+    @Expose
+    int y1;
     //word endpoint (X)
-    private int x2;
+    @Expose
+    int x2;
     //word endpoint (Y)
-    private int y2;
+    @Expose
+    int y2;
 
     public String getWord() {
         return word;

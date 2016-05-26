@@ -1,5 +1,4 @@
 import com.google.gson.annotations.Expose;
-import sun.jvm.hotspot.memory.Dictionary;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Puzzle {
 
-    //todo: set Puzzle properties to user constraints when grid is generated
+    //todo: set Puzzle properties to user constraints when puzzle is generated
 
     private int Width;
     private int Height;
@@ -21,12 +20,13 @@ public class Puzzle {
     private int minWordLength;
     private int maxWordLength;
     @Expose
-    private String[][] grid;
+    private String[][] puzzle;
     private ArrayList<Capability> capabilities;
-
+    @Expose
+    ArrayList<Word>words = new ArrayList<>();
     private Random random = new Random();
 
-    //generates grid
+    //generates puzzle
     public String[][] GenerateGrid(int width, int height){
 
         String[][] grid = new String[width][height];
@@ -46,7 +46,7 @@ public class Puzzle {
 
 
 
-    //this fills empty spaces in puzzle grid w/random letters
+    //this fills empty spaces in puzzle puzzle w/random letters
     public void FillLetters(String[][] grid){
 
         int width = grid.length;
@@ -213,11 +213,19 @@ public class Puzzle {
         this.capabilities = capabilities;
     }
 
-    public String[][] getGrid() {
-        return grid;
+    public String[][] getPuzzle() {
+        return puzzle;
     }
 
-    public void setGrid(String[][] grid) {
-        this.grid = grid;
+    public void setPuzzle(String[][] puzzle) {
+        this.puzzle = puzzle;
+    }
+
+    public ArrayList<Word> getWords() {
+        return words;
+    }
+
+    public void setWords(ArrayList<Word> words) {
+        this.words = words;
     }
 }
