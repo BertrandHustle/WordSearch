@@ -228,9 +228,12 @@ public class test {
             }
 
         }
-
+        //todo needs to be cast to char
         String testWord = words.get(0).getWord();
         char firstLetter = words.get(0).getWord().charAt(0);
+
+        //use empty string casting method here
+
         char lastLetter = testWord.charAt(testWord.length()-1);
         String testString = testPuzzle.getPuzzle()[words.get(0).getY1()][words.get(0).getX1()];
         String testString2 = testPuzzle.getPuzzle()[words.get(0).getY2()][words.get(0).getX2()];

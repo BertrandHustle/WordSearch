@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import spark.Spark;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,54 +19,6 @@ public class Main {
       puzzle.setCapabilities(capabilities);
       Random random = new Random();
       Capability capability = new Capability();
-
-      //test for word gen
-      int numOfWords = 10;
-
-      String[][] grid = puzzle.GenerateGrid(20, 40);
-
-      //do exception for list with only one capability
-      ArrayList<String> capabilitiesList = new ArrayList<>();
-
-      capabilitiesList.add("vertical");
-      capabilitiesList.add("horizontal");
-      capabilitiesList.add("diagonal-up");
-      capabilitiesList.add("diagonal-down");
-
-      for(String s : capabilitiesList){
-          Capability newCapability = new Capability();
-          newCapability.setName(s);
-          newCapability.setKeyword(s);
-          newCapability.setDescription("Adds words at a "+s+" angle in the puzzle");
-
-          puzzle.getCapabilities().add(newCapability);
-      }
-
-      ArrayList<Word> words = new ArrayList<>();
-
-      for (int i = 0 ; i < numOfWords;) {
-
-          //this is the word we'll be passing in
-          Word word = new Word();
-          word.setWord(puzzle.getRandomWord(4, 10));
-
-          int capabilitySelection = random.nextInt(capabilitiesList.size());
-
-          try {
-              capability.generateWord(word, grid, capabilitiesList.get(capabilitySelection));
-              words.add(word);
-              i++;
-          } catch (IndexOutOfBoundsException ioe){
-              int x = 0;
-          }
-
-      }
-
-      puzzle.FillLetters(grid);
-
-      puzzle.printPuzzle(grid);
-
-      int x = 0;
 
       System.out.println((System.currentTimeMillis() - startTime));
 
@@ -89,8 +42,56 @@ public class Main {
       Spark.post(
               "/puzzle",
               (request, response) -> {
+                  //parses puzzle request
+                  String jsonRequest = request.body();
+                  Gson gsonRequest = new GsonBuilder().create();
+                  Puzzle puzzleRequest = gsonRequest.fromJson(jsonRequest, Puzzle.class);
 
-                  //todo: check word coordinates
+                  //init
+                  ArrayList<String>capabilitiesList = new ArrayList<>();
+                  int maxWordLength = puzzleRequest.getMaxWordLength();
+                  int minWordLength = puzzleRequest.getMinWordLength();
+                  int width = puzzleRequest.getWidth();
+                  int height = puzzleRequest.getHeight();
+
+
+                  //sets capabilities to actually BE Capabilities (call capability list maker here)
+                  ArrayList<Capability>requestCapabilities = new ArrayList<Capability>();
+
+                  Puzzle puzzleResponse = new Puzzle(width, height, puzzleRequest.getNumberOfWords(),  minWordLength, maxWordLength, puzzleRequest.getRequestCapabilities(), requestCapabilities);
+
+                  //Puzzle.makeCapabilitiesList(puzzleResponse);
+                  requestCapabilities = Puzzle.makeCapabilitiesList(puzzleResponse);
+
+
+                  ArrayList<Word>words = new ArrayList<>();
+
+                  //generate grid
+                  String[][] grid = puzzleRequest.GenerateGrid(width, height);
+
+                  for (int i = 0 ; i < puzzleRequest.getNumberOfWords();) {
+
+                      //this is the word we'll be passing in
+                      Word word = new Word();
+                      word.setWord(puzzle.getRandomWord(minWordLength, maxWordLength));
+
+                      int capabilitySelection = random.nextInt(puzzleResponse.getRequestCapabilities().size());
+
+                      try {
+                          capability.generateWord(word, grid, puzzleResponse.getRequestCapabilities().get(capabilitySelection));
+                          words.add(word);
+                          i++;
+                      } catch (IndexOutOfBoundsException ioe){
+                          int x = 0;
+                      }
+
+                  }
+
+                  puzzle.FillLetters(grid);
+
+                  puzzle.printPuzzle(grid);
+
+                  int i = 0;
 
                   Puzzle gsonPuzzle = new Puzzle();
                   gsonPuzzle.setPuzzle(grid);
@@ -105,7 +106,7 @@ public class Main {
                   //String jsonWords = gson.toJson(words);
 
                   System.out.println(gsonPuzzle);
-                  System.out.println(words);
+                  //System.out.println(words);
 
                   return json;
               }

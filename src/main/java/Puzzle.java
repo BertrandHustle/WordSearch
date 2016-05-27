@@ -19,12 +19,38 @@ public class Puzzle {
     private int numberOfWords;
     private int minWordLength;
     private int maxWordLength;
+    private ArrayList<String>requestCapabilities;
+    private ArrayList<Capability> capabilities;
+
     @Expose
     private String[][] puzzle;
-    private ArrayList<Capability> capabilities;
+
     @Expose
     ArrayList<Word>words = new ArrayList<>();
     private Random random = new Random();
+
+    public Puzzle(ArrayList<String> requestCapabilities, int maxWordLength, int minWordLength, int numberOfWords, int height, int width) {
+        this.requestCapabilities = requestCapabilities;
+        this.maxWordLength = maxWordLength;
+        this.minWordLength = minWordLength;
+        this.numberOfWords = numberOfWords;
+        Height = height;
+        Width = width;
+    }
+
+    public Puzzle(int width, int height, int numberOfWords, int minWordLength, int maxWordLength, ArrayList<String> requestCapabilities, ArrayList<Capability> capabilities) {
+        Width = width;
+        Height = height;
+        this.numberOfWords = numberOfWords;
+        this.minWordLength = minWordLength;
+        this.maxWordLength = maxWordLength;
+        this.requestCapabilities = requestCapabilities;
+        this.capabilities = capabilities;
+    }
+
+
+    public Puzzle() {
+    }
 
     //generates puzzle
     public String[][] GenerateGrid(int width, int height){
@@ -66,7 +92,7 @@ public class Puzzle {
 
     }
 
-    //todo: change this to return single words
+
 
     //this fills an arraylist with random words from the dictionary
     public ArrayList<String> wordList(int numberOfWords, int minWordLength, int maxWordLength) throws IOException {
@@ -163,6 +189,21 @@ public class Puzzle {
 
     }
 
+    public static ArrayList<Capability>makeCapabilitiesList(Puzzle puzzle){
+        ArrayList<Capability> capabilitiesList = new ArrayList<>();
+
+        for(String s : puzzle.getRequestCapabilities()){
+            Capability newCapability = new Capability();
+            newCapability.setName(s);
+            newCapability.setKeyword(s);
+            newCapability.setDescription("Adds words at a "+s+" angle in the puzzle");
+
+            puzzle.capabilities.add(newCapability);
+        }
+
+        return capabilitiesList;
+    }
+
     //Getters and setters
 
     public int getWidth() {
@@ -227,5 +268,13 @@ public class Puzzle {
 
     public void setWords(ArrayList<Word> words) {
         this.words = words;
+    }
+
+    public ArrayList<String> getRequestCapabilities() {
+        return requestCapabilities;
+    }
+
+    public void setRequestCapabilities(ArrayList<String> requestCapabilities) {
+        this.requestCapabilities = requestCapabilities;
     }
 }
