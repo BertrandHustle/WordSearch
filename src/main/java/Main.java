@@ -39,8 +39,8 @@ public class Main {
 
       System.out.println((System.currentTimeMillis() - startTime));
 
-    //port(Integer.valueOf(System.getenv("PORT")));
-    //staticFileLocation("/public");
+    port(Integer.valueOf(System.getenv("PORT")));
+    staticFileLocation("/public");
 
       //capabilities
       Spark.get(
