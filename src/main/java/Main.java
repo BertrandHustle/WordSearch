@@ -8,6 +8,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
+
 public class Main {
 
   public static void main(String[] args) throws IOException{
@@ -23,8 +26,8 @@ public class Main {
       System.out.println((System.currentTimeMillis() - startTime));
 
 
-    //port(Integer.valueOf(System.getenv("PORT")));
-    //staticFileLocation("/public");
+    port(Integer.valueOf(System.getenv("PORT")));
+    staticFileLocation("/public");
 
       //capabilities
       Spark.get(

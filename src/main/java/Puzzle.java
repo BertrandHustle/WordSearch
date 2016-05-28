@@ -17,7 +17,7 @@ public class Puzzle {
     private int width;
     private int height;
     private int numberOfWords;
-    private int minWordLength; 
+    private int minWordLength;
     private int maxWordLength;
     private ArrayList<String>requestCapabilities;
     private ArrayList<Capability> capabilities;
