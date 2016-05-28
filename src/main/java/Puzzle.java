@@ -14,10 +14,10 @@ public class Puzzle {
 
     //todo: set Puzzle properties to user constraints when puzzle is generated
 
-    private int Width;
-    private int Height;
+    private int width;
+    private int height;
     private int numberOfWords;
-    private int minWordLength;
+    private int minWordLength; 
     private int maxWordLength;
     private ArrayList<String>requestCapabilities;
     private ArrayList<Capability> capabilities;
@@ -34,13 +34,13 @@ public class Puzzle {
         this.maxWordLength = maxWordLength;
         this.minWordLength = minWordLength;
         this.numberOfWords = numberOfWords;
-        Height = height;
-        Width = width;
+        this.height = height;
+        this.width = width;
     }
 
     public Puzzle(int width, int height, int numberOfWords, int minWordLength, int maxWordLength, ArrayList<String> requestCapabilities, ArrayList<Capability> capabilities) {
-        Width = width;
-        Height = height;
+        this.width = width;
+        this.height = height;
         this.numberOfWords = numberOfWords;
         this.minWordLength = minWordLength;
         this.maxWordLength = maxWordLength;
@@ -84,7 +84,7 @@ public class Puzzle {
 
                 //check if space is already filled
                 if (grid[x][y].equals("_")) {
-                    char c = (char) (random.nextInt(26) + 'a');
+                    char c = (char) (random.nextInt(26) + 'A');
                     grid[x][y] = Character.toString(c);
                 }
             }
@@ -207,19 +207,19 @@ public class Puzzle {
     //Getters and setters
 
     public int getWidth() {
-        return Width;
+        return width;
     }
 
     public void setWidth(int width) {
-        Width = width;
+        this.width = width;
     }
 
     public int getHeight() {
-        return Height;
+        return height;
     }
 
     public void setHeight(int height) {
-        Height = height;
+        this.height = height;
     }
 
     public int getNumberOfWords() {
