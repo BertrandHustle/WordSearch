@@ -23,11 +23,24 @@ public class Main {
       Random random = new Random();
       Capability capability = new Capability();
 
+      //represents all possible capabilities
+      ArrayList<Capability>possibleCapabilities = new ArrayList<>();
+      ArrayList<String>possibleCapabilityStrings = new ArrayList<>();
+      Puzzle possiblePuzzle = new Puzzle(1, 1, 1, 1, 1, possibleCapabilityStrings, possibleCapabilities);
+
+      possibleCapabilityStrings.add("horizontal");
+      possibleCapabilityStrings.add("vertical");
+      possibleCapabilityStrings.add("diagonal-up");
+      possibleCapabilityStrings.add("diagonal-down");
+
+      possiblePuzzle.setRequestCapabilities(possibleCapabilityStrings);
+      possibleCapabilities = Puzzle.makeCapabilitiesList(possiblePuzzle);
+
+
       System.out.println((System.currentTimeMillis() - startTime));
 
-
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
+    //port(Integer.valueOf(System.getenv("PORT")));
+    //staticFileLocation("/public");
 
       //capabilities
       Spark.get(
@@ -35,7 +48,7 @@ public class Main {
               (request, response) -> {
 
                   Gson gson = new GsonBuilder().create();
-                  String json = gson.toJson(puzzle.getCapabilities());
+                  String json = gson.toJson(possiblePuzzle.getCapabilities());
 
                   return json;
               }
