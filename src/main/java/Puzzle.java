@@ -133,7 +133,7 @@ public class Puzzle {
     public String getRandomWord(int minWordLength, int maxWordLength) throws IOException{
 
         //scanner for dictionary
-        File dict = new File("/usr/share/dict/words");
+        File dict = new File("Dictionary.txt");
         Scanner scanner = new Scanner(dict);
         scanner.useDelimiter("\\Z");
 
