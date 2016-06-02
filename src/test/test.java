@@ -134,39 +134,53 @@ public class test {
      */
 
     @Test
-    public void whenGivenAJsonThenOutputsPuzzle(){
+    public void whenGivenAJsonThenOutputsPuzzle() throws IOException{
         //arrange
         boolean pass = true;
-        String testJson = "{\n" +
-                "   \"width\": 20,\n" +
-                "   \"height\": 20,\n" +
-                "   \"words\": 10,\n" +
-                "   \"minLength\": 4,\n" +
-                "   \"maxLength\": 8,\n" +
-                "   \"capabilities\": [\n" +
-                "      \"horizontal\",\n" +
-                "      \"vertical\",\n" +
-                "      \"diagonal-up\"\n" +
-                "   ]\n" +
-                "}";
+        Random random = new Random();
+        String testJson = "{\"height\":20,\"numberOfWords\":10,\"width\":20,\"minWordLength\":4,\"maxWordLength\":10,\"requestCapabilities\":[\"vertical\",\"horizontal\"]}";
         //act
         Gson gson = new GsonBuilder().create();
         Puzzle testPuzzle = gson.fromJson(testJson, Puzzle.class);
-        String[][] testGrid = testPuzzle.getPuzzle();
 
-        for (int x = 0; x < testPuzzle.getHeight(); x++) {
-            for (int y = 0; y < testPuzzle.getWidth(); y++) {
-                if (testGrid[x][y].equals("_")){
-                    pass = false;
-                }
+        ArrayList<Word>words = new ArrayList<>();
+
+        //generate grid
+        String[][] grid = testPuzzle.GenerateGrid(testPuzzle.getWidth(), testPuzzle.getHeight());
+
+        for (int i = 0 ; i < testPuzzle.getNumberOfWords();) {
+
+            //this is the word we'll be passing in
+            Word word = new Word();
+            word.setWord(testPuzzle.getRandomWord(testPuzzle.getMinWordLength(), testPuzzle.getMaxWordLength()));
+
+            int capabilitySelection = random.nextInt(testPuzzle.getRequestCapabilities().size());
+
+            try {
+                testCapability.generateWord(word, grid, testPuzzle.getRequestCapabilities().get(capabilitySelection));
+                words.add(word);
+                i++;
+            } catch (IndexOutOfBoundsException ioe){
+                int x = 0;
             }
 
         }
 
+        testPuzzle.FillLetters(grid);
+        testPuzzle.printPuzzle(grid);
+
+        for (int x = 0; x < testPuzzle.getHeight(); x++) {
+            for (int y = 0; y < testPuzzle.getWidth(); y++) {
+                if (grid[x][y].equals("_")){
+                    pass = false;
+                }
+            }
+        }
+
         //assert
-        assertThat((testPuzzle.getCapabilities().contains("horizontal"))
-        &&(testPuzzle.getCapabilities().contains("vertical"))
-        &&(testPuzzle.getCapabilities().contains("diagonal-up"))&& pass, is(true));
+        assertThat((testPuzzle.getRequestCapabilities().contains("horizontal"))
+        &&(testPuzzle.getRequestCapabilities().contains("vertical"))
+        && pass, is(true));
 
 
 
@@ -228,7 +242,7 @@ public class test {
             }
 
         }
-        //todo needs to be cast to char
+
         String testWord = words.get(0).getWord();
         char firstLetter = words.get(0).getWord().charAt(0);
 
@@ -238,8 +252,8 @@ public class test {
         String testString = testPuzzle.getPuzzle()[words.get(0).getY1()][words.get(0).getX1()];
         String testString2 = testPuzzle.getPuzzle()[words.get(0).getY2()][words.get(0).getX2()];
         //assert
-        assertThat(lastLetter, is(testString2));
-        //assertThat(lastLetter, is(testString2));
+        assertThat(Character.toString(lastLetter), is(testString2) );
+        assertThat(Character.toString(firstLetter), is(testString) );
     }
 }
 
