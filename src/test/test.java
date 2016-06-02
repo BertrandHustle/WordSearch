@@ -93,39 +93,7 @@ public class test {
                 testWord.equals(testWord3), is(false));
 
     }
-
-    /**
-     * Given a word too big for puzzle
-     * When word is output into puzzle
-     * Then word prints if it wouldn't hit a wall
-     */
-
-    @Test
-    public void whenGivenBigWordThenWordNotInscribedInPuzzleGrid() throws IOException {
-
-        //arrange
-        Word word = new Word();
-        word.setWord("PARSIMONIOUS");
-
-        String[][] grid = testPuzzle.GenerateGrid(10, 10);
-        boolean foundLetter = false;
-
-        //act
-        String[][] testGrid = testCapability.generateWord(word, grid, "horizontal");
-
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                System.out.println(grid[x][y]);
-                if (!grid[x][y].equals("_")) {
-                    foundLetter = true;
-                }
-            }
-        }
-
-        //assert
-        assertThat(foundLetter, is(false));
-
-    }
+    
 
     /**
      * Given a json String with the right parameters
