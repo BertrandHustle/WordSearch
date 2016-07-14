@@ -6,6 +6,7 @@ import spark.Spark;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static spark.Spark.port;
@@ -14,6 +15,8 @@ import static spark.Spark.staticFileLocation;
 public class Main {
 
   public static void main(String[] args) throws IOException{
+
+      List<String> wordList = Dictionary.createDictionary();
 
       Puzzle puzzle = new Puzzle();
       ArrayList<Capability>capabilities = new ArrayList<>();
@@ -35,17 +38,16 @@ public class Main {
       possibleCapabilities = Puzzle.makeCapabilitiesList(possiblePuzzle);
 
     //disable this for local testing
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
+
+    //port(Integer.valueOf(System.getenv("PORT")));
+    //staticFileLocation("/public");
 
       //capabilities
       Spark.get(
               "/capabilities",
               (request, response) -> {
-
                   Gson gson = new GsonBuilder().create();
                   String json = gson.toJson(possiblePuzzle.getCapabilities());
-
                   return json;
               }
       );
@@ -60,15 +62,14 @@ public class Main {
                   //parses puzzle request
                   String jsonRequest = request.body();
                   Gson gsonRequest = new GsonBuilder().create();
+                  //todo: fix this so it doesn't make two puzzles
                   Puzzle puzzleRequest = gsonRequest.fromJson(jsonRequest, Puzzle.class);
 
                   //init
-                  ArrayList<String>capabilitiesList = new ArrayList<>();
                   int maxWordLength = puzzleRequest.getMaxWordLength();
                   int minWordLength = puzzleRequest.getMinWordLength();
                   int width = puzzleRequest.getWidth();
                   int height = puzzleRequest.getHeight();
-
 
                   //sets capabilities to actually BE Capabilities (call capability list maker here)
                   ArrayList<Capability>requestCapabilities = new ArrayList<Capability>();
@@ -77,7 +78,6 @@ public class Main {
 
                   //Puzzle.makeCapabilitiesList(puzzleResponse);
                   requestCapabilities = Puzzle.makeCapabilitiesList(puzzleResponse);
-
 
                   ArrayList<Word>words = new ArrayList<>();
 
@@ -88,7 +88,10 @@ public class Main {
 
                       //this is the word we'll be passing in
                       Word word = new Word();
-                      word.setWord(puzzle.getRandomWord(minWordLength, maxWordLength));
+
+                      long start = System.currentTimeMillis();
+                      word.setWord(Dictionary.getRandomWordFromDictionary(minWordLength, maxWordLength, wordList));
+                      System.out.println((System.currentTimeMillis() - start));
 
                       int capabilitySelection = random.nextInt(puzzleResponse.getRequestCapabilities().size());
 
@@ -103,10 +106,7 @@ public class Main {
                   }
 
                   puzzle.FillLetters(grid);
-
                   puzzle.printPuzzle(grid);
-
-                  int i = 0;
 
                   Puzzle gsonPuzzle = new Puzzle();
                   gsonPuzzle.setPuzzle(grid);
@@ -117,13 +117,8 @@ public class Main {
                   }
                   String json = gson.toJson(gsonPuzzle);
 
-
-                  //String jsonWords = gson.toJson(words);
-
                   System.out.println(gsonPuzzle);
                   System.out.println((System.currentTimeMillis() - startTime));
-
-                  //System.out.println(words);
 
                   return json;
               }

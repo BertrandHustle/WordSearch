@@ -21,29 +21,7 @@ public class Capability {
      * for diag-down + i to randomX, + i to randomY
      */
 
-    public static void directionSwitch(int X, int Y, String direction){
-
-        switch (direction) {
-            case "horizontal":
-                Y++;
-                break;
-            case "vertical":
-                X++;
-                break;
-            case "diagonal-up":
-                X--;
-                Y++;
-                break;
-            case "diagonal-down":
-                X++;
-                Y++;
-                break;
-        }
-
-    }
-
     //generates word (more accurately: generates updated grid containing word)
-    //todo: this needs to take a Word as argument
     public String[][] generateWord(Word passedInWord, String[][] grid, String direction) {
 
         Random random = new Random();
@@ -59,7 +37,6 @@ public class Capability {
         String word = passedInWord.getWord();
 
         //ghostwriter (scouts out if word will fit)
-
         boolean noWallsorWords = true;
 
         int testRandomX = randomX;
@@ -73,15 +50,11 @@ public class Capability {
             //sets characters in word to spaces in grid
 
             if (currentPoint.equals(currentChar) || currentPoint.equals("_")) {
-
                 int x = 0;
             } else {
                 noWallsorWords = false;
                 grid[xBound + 10][yBound + 10] = " ";
             }
-
-            //Capability.directionSwitch(testRandomX, testRandomY, direction);
-
 
             switch (direction) {
                 case "horizontal":
@@ -128,9 +101,6 @@ public class Capability {
                     //guarantees out of bounds exception
                     grid[xBound + 10][yBound + 10] = " ";
                 }
-
-                //Capability.directionSwitch(randomX, randomY, direction);
-
 
                 switch (direction) {
                     case "horizontal":

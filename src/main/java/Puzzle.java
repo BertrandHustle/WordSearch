@@ -52,22 +52,17 @@ public class Puzzle {
     public Puzzle() {
     }
 
-    //generates puzzle
+    //generates puzzle grid
     public String[][] GenerateGrid(int width, int height){
 
         String[][] grid = new String[width][height];
 
         for (int x = 0; x < width; x++){
-
             for (int y = 0; y < height; y++){
-
                 grid[x][y] = "_";
-
             }
         }
-
         return grid;
-
     }
 
 
@@ -93,18 +88,16 @@ public class Puzzle {
     }
 
 
-
+    //todo: get rid of this, it's useless
     //this fills an arraylist with random words from the dictionary
     public ArrayList<String> wordList(int numberOfWords, int minWordLength, int maxWordLength) throws IOException {
 
         ArrayList<String> wordList = new ArrayList<>();
-
         //main loop for generating word list
 
         while (wordList.size() < numberOfWords) {
 
             //generates random int
-
             int randomNumber = random.nextInt(235887);
 
             //exception handling for number 0
@@ -120,12 +113,9 @@ public class Puzzle {
             if ((randomWord.length() <= maxWordLength)
                 && (randomWord.length() >= minWordLength)
                 && !wordList.contains(randomWord)) {
-
                 wordList.add(randomWord.toUpperCase());
             }
-
         }
-
         return wordList;
     }
 
@@ -146,32 +136,6 @@ public class Puzzle {
                 .collect(Collectors.toList());
 
         return filteredWords.get(new Random().nextInt(filteredWords.size()-1)).toUpperCase();
-
-        /*
-        //generates random int
-
-        boolean success = false;
-        String randomWord = "";
-
-        while(!success){
-
-        int randomNumber = random.nextInt(235887);
-
-        //exception handling for number 0
-        if (randomNumber == 0){
-            randomNumber = 1;
-        }
-
-        //gets random word
-        randomWord = Files.readAllLines(Paths.get("Dictionary.txt")).get(randomNumber).toUpperCase();
-
-        if ((randomWord.length() <= maxWordLength) && (randomWord.length() >= minWordLength)){
-                success = true;
-            }
-        }
-
-        return randomWord;
-        */
 
     }
 
