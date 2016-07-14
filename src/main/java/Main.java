@@ -15,8 +15,6 @@ public class Main {
 
   public static void main(String[] args) throws IOException{
 
-      long startTime = System.currentTimeMillis();
-
       Puzzle puzzle = new Puzzle();
       ArrayList<Capability>capabilities = new ArrayList<>();
       puzzle.setCapabilities(capabilities);
@@ -36,11 +34,9 @@ public class Main {
       possiblePuzzle.setRequestCapabilities(possibleCapabilityStrings);
       possibleCapabilities = Puzzle.makeCapabilitiesList(possiblePuzzle);
 
-
-      System.out.println((System.currentTimeMillis() - startTime));
-
-    //port(Integer.valueOf(System.getenv("PORT")));
-    //staticFileLocation("/public");
+    //disable this for local testing
+    port(Integer.valueOf(System.getenv("PORT")));
+    staticFileLocation("/public");
 
       //capabilities
       Spark.get(
@@ -58,6 +54,9 @@ public class Main {
       Spark.post(
               "/puzzle",
               (request, response) -> {
+
+                  long startTime = System.currentTimeMillis();
+
                   //parses puzzle request
                   String jsonRequest = request.body();
                   Gson gsonRequest = new GsonBuilder().create();
@@ -122,6 +121,8 @@ public class Main {
                   //String jsonWords = gson.toJson(words);
 
                   System.out.println(gsonPuzzle);
+                  System.out.println((System.currentTimeMillis() - startTime));
+
                   //System.out.println(words);
 
                   return json;

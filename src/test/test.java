@@ -93,7 +93,7 @@ public class test {
                 testWord.equals(testWord3), is(false));
 
     }
-    
+
 
     /**
      * Given a json String with the right parameters
