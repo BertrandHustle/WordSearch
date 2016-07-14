@@ -39,8 +39,8 @@ public class Main {
 
     //disable this for local testing
 
-    //port(Integer.valueOf(System.getenv("PORT")));
-    //staticFileLocation("/public");
+    port(Integer.valueOf(System.getenv("PORT")));
+    staticFileLocation("/public");
 
       //capabilities
       Spark.get(
