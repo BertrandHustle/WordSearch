@@ -114,7 +114,7 @@ public class test {
         ArrayList<Word>words = new ArrayList<>();
 
         //generate grid
-        String[][] grid = testPuzzle.GenerateGrid(testPuzzle.getWidth(), testPuzzle.getHeight());
+        String[][] grid = testPuzzle.GenerateGrid(testPuzzle.getHeight(), testPuzzle.getWidth());
 
         for (int i = 0 ; i < testPuzzle.getNumberOfWords();) {
 
@@ -137,8 +137,8 @@ public class test {
         testPuzzle.FillLetters(grid);
         testPuzzle.printPuzzle(grid);
 
-        for (int x = 0; x < testPuzzle.getHeight(); x++) {
-            for (int y = 0; y < testPuzzle.getWidth(); y++) {
+        for (int x = 0; x < testPuzzle.getWidth(); x++) {
+            for (int y = 0; y < testPuzzle.getHeight(); y++) {
                 if (grid[x][y].equals("_")){
                     pass = false;
                 }

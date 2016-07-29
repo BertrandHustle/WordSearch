@@ -4,7 +4,6 @@ import com.google.gson.GsonBuilder;
 import spark.Spark;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,10 +36,14 @@ public class Main {
       possiblePuzzle.setRequestCapabilities(possibleCapabilityStrings);
       possibleCapabilities = Puzzle.makeCapabilitiesList(possiblePuzzle);
 
+      String[][] testGrid = puzzle.GenerateGrid(4,6);
+      puzzle.FillLetters(testGrid);
+      puzzle.printPuzzle(testGrid);
+
     //disable this for local testing
 
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
+    //port(Integer.valueOf(System.getenv("PORT")));
+    //staticFileLocation("/public");
 
       //capabilities
       Spark.get(
@@ -68,13 +71,13 @@ public class Main {
                   //init
                   int maxWordLength = puzzleRequest.getMaxWordLength();
                   int minWordLength = puzzleRequest.getMinWordLength();
-                  int width = puzzleRequest.getWidth();
                   int height = puzzleRequest.getHeight();
+                  int width = puzzleRequest.getWidth();
 
                   //sets capabilities to actually BE Capabilities (call capability list maker here)
                   ArrayList<Capability>requestCapabilities = new ArrayList<Capability>();
 
-                  Puzzle puzzleResponse = new Puzzle(width, height, puzzleRequest.getNumberOfWords(),  minWordLength, maxWordLength, puzzleRequest.getRequestCapabilities(), requestCapabilities);
+                  Puzzle puzzleResponse = new Puzzle(height, width, puzzleRequest.getNumberOfWords(),  minWordLength, maxWordLength, puzzleRequest.getRequestCapabilities(), requestCapabilities);
 
                   //Puzzle.makeCapabilitiesList(puzzleResponse);
                   requestCapabilities = Puzzle.makeCapabilitiesList(puzzleResponse);
@@ -82,7 +85,7 @@ public class Main {
                   ArrayList<Word>words = new ArrayList<>();
 
                   //generate grid
-                  String[][] grid = puzzleRequest.GenerateGrid(width, height);
+                  String[][] grid = puzzleRequest.GenerateGrid(height, width);
 
                   for (int i = 0 ; i < puzzleRequest.getNumberOfWords();) {
 
@@ -91,7 +94,7 @@ public class Main {
 
                       long start = System.currentTimeMillis();
                       word.setWord(Dictionary.getRandomWordFromDictionary(minWordLength, maxWordLength, wordList));
-                      System.out.println((System.currentTimeMillis() - start));
+                      //System.out.println((System.currentTimeMillis() - start));
 
                       int capabilitySelection = random.nextInt(puzzleResponse.getRequestCapabilities().size());
 
@@ -118,7 +121,7 @@ public class Main {
                   String json = gson.toJson(gsonPuzzle);
 
                   System.out.println(gsonPuzzle);
-                  System.out.println((System.currentTimeMillis() - startTime));
+                  //System.out.println((System.currentTimeMillis() - startTime));
 
                   return json;
               }

@@ -14,8 +14,8 @@ public class Puzzle {
 
     //todo: set Puzzle properties to user constraints when puzzle is generated
 
-    private int width;
     private int height;
+    private int width;
     private int numberOfWords;
     private int minWordLength;
     private int maxWordLength;
@@ -29,18 +29,18 @@ public class Puzzle {
     ArrayList<Word>words = new ArrayList<>();
     private Random random = new Random();
 
-    public Puzzle(ArrayList<String> requestCapabilities, int maxWordLength, int minWordLength, int numberOfWords, int height, int width) {
+    public Puzzle(ArrayList<String> requestCapabilities, int maxWordLength, int minWordLength, int numberOfWords, int width, int height) {
         this.requestCapabilities = requestCapabilities;
         this.maxWordLength = maxWordLength;
         this.minWordLength = minWordLength;
         this.numberOfWords = numberOfWords;
-        this.height = height;
         this.width = width;
+        this.height = height;
     }
 
-    public Puzzle(int width, int height, int numberOfWords, int minWordLength, int maxWordLength, ArrayList<String> requestCapabilities, ArrayList<Capability> capabilities) {
-        this.width = width;
+    public Puzzle(int height, int width, int numberOfWords, int minWordLength, int maxWordLength, ArrayList<String> requestCapabilities, ArrayList<Capability> capabilities) {
         this.height = height;
+        this.width = width;
         this.numberOfWords = numberOfWords;
         this.minWordLength = minWordLength;
         this.maxWordLength = maxWordLength;
@@ -74,11 +74,10 @@ public class Puzzle {
         int height = grid[0].length;
 
         for (int x = 0; x < width; x++){
-
             for (int y = 0; y < height; y++){
-
                 //check if space is already filled
                 if (grid[x][y].equals("_")) {
+                    //fill space with random letter
                     char c = (char) (random.nextInt(26) + 'A');
                     grid[x][y] = Character.toString(c);
                 }
@@ -170,20 +169,20 @@ public class Puzzle {
 
     //Getters and setters
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public int getNumberOfWords() {

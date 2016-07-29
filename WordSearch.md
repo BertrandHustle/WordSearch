@@ -3,7 +3,7 @@ Word Search
 /capabilities
 
 The word search app (hence to be referred to as WS) will be capable of generating a 
-puzzle of variant height and width, as defined by the user within certain constraints 
+puzzle of variant width and height, as defined by the user within certain constraints
 (e.g. the puzzle cannot be a single letter tall or wide).  WS will be able to take a 
 user-defined puzzle (again, within certain constraints) and generate a user-defined
 number of words inside said puzzle.  These words can be generated horizontally, vertically,
@@ -48,8 +48,8 @@ request's dimensions. The JSON request for this is as follows:
 
 	1.1. 
 	{
-    "width": 2,
     "height": 2,
+    "width": 2,
     "words": 500,
     "minLength": 5,
     "maxLength": 10,
@@ -61,8 +61,8 @@ and can be generated only vertically. The JSON request for this is as follows:
 
 	2.1. 
 	{
-    "width": 50,
     "height": 50,
+    "width": 50,
     "words": 1,
     "minLength": 20,
     "maxLength": 40,
@@ -71,17 +71,17 @@ and can be generated only vertically. The JSON request for this is as follows:
 
 List of steps in plain English: 
 1. Define puzzle
-2. Define height of puzzle
-3. Set height of puzzle
-4. Define width of puzzle
-5. Set width of puzzle
-6. Draw left wall of puzzle (by height)
-7. Draw bottom wall of puzzle (by width)
-8. Draw right wall of puzzle (by height)
-9. Draw top wall of puzzle (by width)
-10. Draw vertical lines inside of puzzle (by width, e.g. if width is 6 then draw 6
+2. Define width of puzzle
+3. Set width of puzzle
+4. Define height of puzzle
+5. Set height of puzzle
+6. Draw left wall of puzzle (by width)
+7. Draw bottom wall of puzzle (by height)
+8. Draw right wall of puzzle (by width)
+9. Draw top wall of puzzle (by height)
+10. Draw vertical lines inside of puzzle (by height, e.g. if height is 6 then draw 6
 	evenly-spaced vertical lines.
-11. Draw horizontal lines inside of puzzle (by height, e.g. if height is 6 then draw 6
+11. Draw horizontal lines inside of puzzle (by width, e.g. if width is 6 then draw 6
 	evenly-spaced horizontal lines.
 12. Define number of words in puzzle
 13. Set number of words in puzzle
@@ -166,7 +166,7 @@ To generate a puzzle, WS will take the following into account.
 		Latin alphabet. 
 		
 		3.14. User-defined constraints: this is a list of user-defined constraints for the 
-		puzzle (e.g. puzzle puzzle height).  This will be a property of the puzzle itself.
+		puzzle (e.g. puzzle puzzle width).  This will be a property of the puzzle itself.
 		
 	3.2. WS will also include a puzzle-generation method.  This method will be separate 
 	from the main method.  
@@ -219,8 +219,8 @@ To generate a puzzle, WS will take the following into account.
 	
 		5.31. Methods
 		
-			5.311. GenerateGrid(int Width, int Height): generates puzzle at given width/
-			height
+			5.311. GenerateGrid(int Width, int Height): generates puzzle at given height/
+			width
 			
 			5.312. GenerateWord(String word, Capability capability): 
 			checks puzzle for blank space, generates word letter-by-letter
@@ -232,9 +232,9 @@ To generate a puzzle, WS will take the following into account.
 		
 		5.32. Properties
 		
-			5.321. int width: describes width of puzzle puzzle
+			5.321. int height: describes height of puzzle puzzle
 			
-			5.322. int height: describes height of puzzle puzzle
+			5.322. int width: describes width of puzzle puzzle
 			
 			5.323. int minWordLength: describes minimum length of word to be put in puzzle
 			
